@@ -81,8 +81,11 @@ module memory_tb ();
   logic                  clock;
   logic [ADDR_WIDTH-1:0] addr;
   tri   [          31:0] data;
+  logic [          31:0] temp_data;
   logic                  re;
   logic                  we;
+
+  assign data = (we) ? temp_data : 32'bz;
 
   memory dut (.*);
 
@@ -92,32 +95,44 @@ module memory_tb ();
   end
 
   initial begin
-    $monitor($time,, "addr = %b", addr, "data = %b", data);
+    $display(ADDR_WIDTH);
+    $monitor($time,, "addr = %b", addr,, "data = %h", data);
+  end
+
+  initial begin
+    $dumpvars(0, memory_tb);
   end
 
   initial begin
     addr = 0;
-    re   = 0;
-    we   = 0;
+    re = 0;
+    we = 0;
+    temp_data = 0;
 
     @(posedge clock);
     @(posedge clock);
 
-    re = 1;
+    re <= 1;
 
     @(posedge clock);
 
-    addr += 1;
+    addr <= addr + 4;
 
     @(posedge clock);
 
-    addr += 1;
+    addr <= addr + 4;
 
     @(posedge clock);
 
-    addr += 1;
+    addr <= addr + 4;
 
     @(posedge clock);
+
+    re <= 0;
+    we <= 1;
+    addr <= 0;
+    temp_data <= 32'hDEEDFEED;
+
     @(posedge clock);
 
     $finish();
