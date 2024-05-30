@@ -1,28 +1,28 @@
 `default_nettype none
 
 module regfile (
-    input  logic        clock,
-    input  logic        reset,
-    input  logic [ 4:0] rd,
-    input  logic [31:0] rd_in,
+    input  logic        clk,
+    input  logic        rst_n,
+    input  logic [ 4:0] sel_rd,
+    input  logic [31:0] in_rd,
     input  logic        we,
-    input  logic [ 4:0] rs1,
-    input  logic [ 4:0] rs2,
-    output logic [31:0] rs1_out,
-    output logic [31:0] rs2_out
+    input  logic [ 4:0] sel_rs1,
+    input  logic [ 4:0] sel_rs2,
+    output logic [31:0] out_rs1,
+    output logic [31:0] out_rs2
 );
 
-  logic [31:0][32] register;
+  logic [31:0][32] register_file;
 
-  always_ff @(posedge clock, posedge reset) begin
-    if (reset) begin
-      register <= '0;
-      rs1_out  <= '0;
-      rs2_out  <= '0;
+  always_ff @(posedge clk, negedge rst_n) begin
+    if (~rst_n) begin
+      register_file <= '0;
+      out_rs1  <= '0;
+      out_rs2  <= '0;
     end else begin
-      if (we) register[rd] <= rd_in;
-      rs1_out <= register[rs1];
-      rs2_out <= register[rs2];
+      if (we) register_file[sel_rd] <= in_rd;
+      out_rs1 <= register_file[sel_rs1];
+      out_rs2 <= register_file[sel_rs2];
     end
   end
 
