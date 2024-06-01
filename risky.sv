@@ -47,9 +47,7 @@ module risky (
       .we_i  (1'b0)
   );
 
-  logic decode_sel_rs1;
-  logic decode_sel_rs2;
-  logic decode_sel_rd;
+  logic [ 4:0] decode_sel_rs1, decode_sel_rs2, decode_sel_rd;
   logic [19:0] decode_imm;
   logic [4:0] opcode_q2; // q2 because already 1 cycle latency with instr
 
@@ -86,13 +84,13 @@ module risky (
   execute u_execute (
     .clk,
     .rst_n,
-    .opcode_i(opcode_q2),
-    .rs1_i   (regfile_rs1),
-    .rs2_i   (regfile_rs2),
-    .rd_i    (decode_sel_rd),
-    .imm_i   (decode_imm),
-    .opcode_o(opcode_q3),
-    .result_o(execute_alu_result)
+    .opcode_i    (opcode_q2),
+    .rs1_i       (regfile_rs1),
+    .rs2_i       (regfile_rs2),
+    .rd_i        (decode_sel_rd),
+    .imm_i       (decode_imm),
+    .opcode_o    (opcode_q3),
+    .alu_result_o(execute_alu_result)
   );
 
   tri   [31:0] data_memory_bus;
@@ -112,15 +110,5 @@ module risky (
     .opcode_o    (opcode_q4),
     .data_o      (mem_data)
   );
-
-  data_memory u_data_memory (
-    .clk,
-    .addr_i(execute_alu_result),
-    .bus_io(data_memory_bus),
-    .re_i  (mem_re),
-    .we_i  (mem_we)
-  );
-
-
 
 endmodule : risky

@@ -22,7 +22,7 @@ module regfile (
       rs1_o               <= '0;
       rs2_o               <= '0;
     end else begin
-      if (we && (sel_rd_i != 5'b0)) register_file[sel_rd_i] <= rd_i;
+      if (we_i && (sel_rd_i != 5'b0)) register_file[sel_rd_i] <= rd_i;
       rs1_o <= register_file[sel_rs1_i];
       rs2_o <= register_file[sel_rs2_i];
     end

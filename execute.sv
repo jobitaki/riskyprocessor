@@ -15,20 +15,14 @@ module execute (
   always_ff @(posedge clk, negedge rst_n) begin
     if (~rst_n) begin
       opcode_o <= '0;
-      rs1_o    <= '0;
-      rs2_o    <= '0;
-      imm_o    <= '0;
     end
     else begin
       opcode_o <= opcode_i;
-      rs1_o    <= rs1_i;
-      rs2_o    <= rs2_i;
-      imm_o    <= imm_i;
     end
   end
 
   logic [31:0] alu_oper1, alu_oper2;
-  logic        alu_sel_op;
+  logic [ 4:0] alu_sel_op;
   logic [31:0] alu_result;
 
   always_comb begin
@@ -36,7 +30,7 @@ module execute (
       5'b00000: begin
         alu_oper1 = rs1_i;
         alu_oper2 = imm_i;
-        alu_sel_i = ALU_ADD;
+        alu_sel_op = ALU_ADD;
       end
 
       default: begin

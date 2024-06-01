@@ -4,7 +4,7 @@ module risky_tb ();
   logic clk, rst_n;
 
   risky dut (
-    .clk, 
+    .clk,
     .rst_n
   );
 

@@ -36,4 +36,14 @@ module mem_access (
     endcase
   end
 
+  tri [31:0] data_memory_bus;
+
+  data_memory u_data_memory (
+    .clk,
+    .addr_i(alu_result_i),
+    .bus_io(data_memory_bus),
+    .re_i  (mem_re),
+    .we_i  (mem_we)
+  );
+
 endmodule
