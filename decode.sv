@@ -6,6 +6,7 @@ module decode (
     input  logic [31:0] instr_i,
     output logic [ 4:0] sel_rs1_o,
     output logic [ 4:0] sel_rs2_o,
+    output logic [ 4:0] sel_rd_o,
     output logic [19:0] imm_o,
     output logic [ 4:0] opcode_o
 );
@@ -28,8 +29,9 @@ module decode (
   always_comb begin
     casez (instr_i)
       LB: begin
-        sel_rs1_o  = instr_i[19:15];
-        temp_imm = instr_i[31:20];
+        sel_rs1_o = instr_i[19:15];
+        temp_imm  = instr_i[31:20];
+        sel_rd_o  = instr_i[11:7];
       end
       ADD: begin
         sel_rs1_o = instr_i[19:15];

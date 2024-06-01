@@ -6,6 +6,7 @@ module execute (
     input  logic [ 4:0] opcode_i,
     input  logic [31:0] rs1_i,
     input  logic [31:0] rs2_i,
+    input  logic [31:0] rd_i,
     input  logic [19:0] imm_i,
     output logic [ 4:0] opcode_o,
     output logic [31:0] alu_result_o
@@ -14,12 +15,15 @@ module execute (
   always_ff @(posedge clk, negedge rst_n) begin
     if (~rst_n) begin
       opcode_o <= '0;
-      rs1_o <= '0;
-      rs2_o <= '0;
-      imm_o <= '0;
+      rs1_o    <= '0;
+      rs2_o    <= '0;
+      imm_o    <= '0;
     end
     else begin
       opcode_o <= opcode_i;
+      rs1_o    <= rs1_i;
+      rs2_o    <= rs2_i;
+      imm_o    <= imm_i;
     end
   end
 

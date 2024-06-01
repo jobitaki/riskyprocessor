@@ -13,7 +13,7 @@ module data_memory (
   assign bus_io = (re_i) ? mem[addr_i] : 'z;
 
   always_ff @(posedge clk) begin
-    if (we_i) mem[addr_i] <= data;
+    if (we_i) mem[addr_i] <= bus_io;
   end
 
   initial begin
@@ -41,4 +41,4 @@ module data_memory (
     $fclose(fd);
   end
 
-endmodule : memory_simulation
+endmodule : data_memory

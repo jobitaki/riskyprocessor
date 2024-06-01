@@ -11,7 +11,7 @@ module fetch (
 
   // Instruction pipeline
   always_ff @(posedge clk, negedge rst_n) begin
-    if (~rst_n) instr_o <= '0;
+    if (!rst_n) instr_o <= '0;
     else instr_o <= instr_i;
   end
 
@@ -21,18 +21,18 @@ module fetch (
 
   // It should have an FSM that implements a handshake with the decode stage.
   fetch_fsm u_fetch_fsm (
-    .clk,
-    .rst_n,
-    .stall_i,
-    .re_o,
+      .clk,
+      .rst_n,
+      .stall_i,
+      .re_o
   );
 
 endmodule : fetch
 
 module fetch_fsm (
-    input logic clk,
-    input logic rst_n,
-    input logic stall_i,
+    input  logic clk,
+    input  logic rst_n,
+    input  logic stall_i,
     output logic re_o
 );
 
@@ -66,7 +66,7 @@ module fetch_fsm (
   end
 
   always_ff @(posedge clk, negedge rst_n) begin
-    if (~rst_n) state <= FETCH;
+    if (!rst_n) state <= FETCH;
     else state <= next_state;
   end
 
