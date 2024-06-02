@@ -31,6 +31,11 @@ module risky_tb ();
     @(posedge clk);
     @(posedge clk);
     @(posedge clk);
+    @(posedge clk);
+    @(posedge clk);
+    @(posedge clk);
+    @(posedge clk);
+    @(posedge clk);
     $finish;
   end
 

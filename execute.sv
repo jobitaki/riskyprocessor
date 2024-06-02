@@ -3,21 +3,24 @@
 module execute (
     input  logic clk,
     input  logic rst_n,
-    input  logic [ 4:0] opcode_i,
+    input  logic [31:0] instr_i,
     input  logic [31:0] rs1_i,
     input  logic [31:0] rs2_i,
-    input  logic [31:0] rd_i,
+    input  logic [31:0] sel_rd_i,
     input  logic [19:0] imm_i,
-    output logic [ 4:0] opcode_o,
+    output logic [31:0] instr_o,
+    output logic [ 4:0] sel_rd_o,
     output logic [31:0] alu_result_o
 );
 
   always_ff @(posedge clk, negedge rst_n) begin
-    if (~rst_n) begin
-      opcode_o <= '0;
+    if (!rst_n) begin
+      instr_o  <= '0;
+      sel_rd_o <= '0;
     end
     else begin
-      opcode_o <= opcode_i;
+      instr_o  <= instr_i;
+      sel_rd_o <= sel_rd_i;
     end
   end
 
@@ -26,14 +29,17 @@ module execute (
   logic [31:0] alu_result;
 
   always_comb begin
-    case (opcode_i)
-      5'b00000: begin
-        alu_oper1 = rs1_i;
-        alu_oper2 = imm_i;
+    casez (instr_i)
+      LB: begin
+        alu_oper1  = rs1_i;
+        alu_oper2  = imm_i;
         alu_sel_op = ALU_ADD;
       end
 
       default: begin
+        alu_oper1  = '0;
+        alu_oper2  = '0;
+        alu_sel_op = UNDEF;
       end
     endcase
   end
@@ -46,7 +52,7 @@ module execute (
   );
 
   always_ff @(posedge clk, negedge rst_n) begin
-    if (~rst_n) alu_result_o <= '0;
+    if (!rst_n) alu_result_o <= '0;
     else alu_result_o <= alu_result;
   end
 

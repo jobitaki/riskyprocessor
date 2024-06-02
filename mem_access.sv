@@ -3,47 +3,54 @@
 module mem_access (
     input  logic        clk,
     input  logic        rst_n,
-    input  logic [ 4:0] opcode_i,
+    input  logic [31:0] instr_i,
     input  logic [31:0] alu_result_i,
-    input  logic [31:0] data_i,
-    output logic        re_o,
-    output logic        we_o,
-    output logic [ 4:0] opcode_o,
+    output logic [31:0] instr_o,
+    output logic [31:0] alu_result_o,
     output logic [31:0] data_o
 );
 
+  logic re, we;
+
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
-      opcode_o <= '0;
-      data_o   <= '0;
+      instr_o <= '0;
+      alu_result_o <= '0;
     end
     else begin
-      opcode_o <= opcode_i;
-      data_o   <= data_i;
+      instr_o <= instr_i;
+      alu_result_o <= alu_result_i;
     end
   end
 
   always_comb begin
-    re_o = 1'b0;
-    we_o = 1'b0;
-    case (opcode_i)
-      5'b00000: begin
-        re_o = 1'b1;
+    casez (instr_i)
+      LB: begin
+        re = 1'b1;
       end
 
       default: begin
+        re = 1'b0;
+        we = 1'b0;
       end
     endcase
   end
 
-  tri [31:0] data_memory_bus;
+  tri   [        31:0] data_memory_bus;
+  logic [ADDR_WIDTH:0] data_memory_addr;
+
+  assign data_memory_addr = {alu_result_i[ADDR_WIDTH:2], 2'b00};
 
   data_memory u_data_memory (
     .clk,
-    .addr_i(alu_result_i),
+    .addr_i(data_memory_addr),
     .bus_io(data_memory_bus),
-    .re_i  (mem_re),
-    .we_i  (mem_we)
+    .re_i  (re),
+    .we_i  (we)
   );
+
+  always_ff @(posedge clk, negedge rst_n) begin
+    data_o <= data_memory_bus;
+  end
 
 endmodule

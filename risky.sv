@@ -49,7 +49,7 @@ module risky (
 
   logic [ 4:0] decode_sel_rs1, decode_sel_rs2, decode_sel_rd;
   logic [19:0] decode_imm;
-  logic [4:0] opcode_q2; // q2 because already 1 cycle latency with instr
+  logic [31:0] instr_q2;
 
 
   decode u_decode (
@@ -60,55 +60,68 @@ module risky (
       .sel_rs2_o(decode_sel_rs2),
       .sel_rd_o (decode_sel_rd),
       .imm_o    (decode_imm),
-      .opcode_o (opcode_q2)
+      .instr_o  (instr_q2)
   );
-  
+
   logic [31:0] regfile_rs1;
   logic [31:0] regfile_rs2;
-  
+  logic        writeback_we;
+  logic [ 4:0] writeback_sel_rd;
+  logic [31:0] writeback_data;
+
   regfile u_regfile (
       .clk,
       .rst_n,
-      .sel_rd_i (5'b0),
-      .rd_i     (32'b0),
-      .we_i     (1'b0),
+      .sel_rd_i (writeback_sel_rd),
+      .rd_i     (writeback_data),
+      .we_i     (writeback_we),
       .sel_rs1_i(decode_sel_rs1),
       .sel_rs2_i(decode_sel_rs2),
       .rs1_o    (regfile_rs1),
       .rs2_o    (regfile_rs2)
   );
 
-  logic [ 4:0] opcode_q3;
+  logic [31:0] instr_q3;
   logic [31:0] execute_alu_result;
+  logic [ 4:0] execute_sel_rd;
 
   execute u_execute (
     .clk,
     .rst_n,
-    .opcode_i    (opcode_q2),
+    .instr_i     (instr_q2),
     .rs1_i       (regfile_rs1),
     .rs2_i       (regfile_rs2),
-    .rd_i        (decode_sel_rd),
+    .sel_rd_i    (decode_sel_rd),
     .imm_i       (decode_imm),
-    .opcode_o    (opcode_q3),
+    .instr_o     (instr_q3),
+    .sel_rd_o    (execute_sel_rd),
     .alu_result_o(execute_alu_result)
   );
 
   tri   [31:0] data_memory_bus;
-  logic [ 4:0] opcode_q4;
-  logic mem_re;
-  logic mem_we;
+  logic [31:0] instr_q4;
   logic [31:0] mem_data;
+  logic [31:0] mem_access_alu_result;
 
   mem_access u_mem_access (
     .clk,
     .rst_n,
-    .opcode_i    (opcode_q3),
+    .instr_i     (instr_q3),
     .alu_result_i(execute_alu_result),
-    .data_i      (data_memory_bus),
-    .re_o        (mem_re),
-    .we_o        (mem_we),
-    .opcode_o    (opcode_q4),
+    .instr_o     (instr_q4),
+    .alu_result_o(mem_access_alu_result),
     .data_o      (mem_data)
+  );
+
+  writeback u_writeback (
+    .clk,
+    .rst_n,
+    .instr_i     (instr_q4),
+    .alu_result_i(mem_access_alu_result),
+    .data_i      (mem_data),
+    .sel_rd_o    (writeback_sel_rd),
+    .we_o        (writeback_we),
+    .data_o      (writeback_data)
   );
 
 endmodule : risky

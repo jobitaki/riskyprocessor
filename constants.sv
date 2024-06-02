@@ -7,5 +7,6 @@ typedef enum logic [31:0] {
 } opcode_e;
 
 typedef enum logic [4:0] {
-  ALU_ADD = 5'b00000
+  ALU_ADD = 5'b00000,
+  UNDEF   = 5'b11111
 } alu_op_e;
