@@ -6,8 +6,6 @@ module decode (
     input  logic [31:0] instr_i,
     output logic [ 4:0] sel_rs1_o,
     output logic [ 4:0] sel_rs2_o,
-    output logic [ 4:0] sel_rd_o,
-    output logic [19:0] imm_o,
     output logic [31:0] instr_o
 );
 
@@ -19,25 +17,18 @@ module decode (
     else        instr_o <= instr_i;
   end
 
-  logic [19:0] temp_imm;
-
-  always_ff @(posedge clk, negedge rst_n) begin
-    if (~rst_n) imm_o <= '0;
-    else imm_o <= temp_imm;
-  end
-
   always_comb begin
     casez (instr_i)
       LB: begin
         sel_rs1_o = instr_i[19:15];
-        temp_imm  = instr_i[31:20];
-        sel_rd_o  = instr_i[11:7];
       end
       ADD: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
       end
       default: begin
+        sel_rs1_o = '0;
+        sel_rs2_o = '0;
       end
     endcase
   end

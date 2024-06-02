@@ -48,9 +48,7 @@ module risky (
   );
 
   logic [ 4:0] decode_sel_rs1, decode_sel_rs2, decode_sel_rd;
-  logic [19:0] decode_imm;
   logic [31:0] instr_q2;
-
 
   decode u_decode (
       .clk,
@@ -58,8 +56,6 @@ module risky (
       .instr_i  (instr_q1),
       .sel_rs1_o(decode_sel_rs1),
       .sel_rs2_o(decode_sel_rs2),
-      .sel_rd_o (decode_sel_rd),
-      .imm_o    (decode_imm),
       .instr_o  (instr_q2)
   );
 
@@ -83,7 +79,6 @@ module risky (
 
   logic [31:0] instr_q3;
   logic [31:0] execute_alu_result;
-  logic [ 4:0] execute_sel_rd;
 
   execute u_execute (
     .clk,
@@ -91,10 +86,7 @@ module risky (
     .instr_i     (instr_q2),
     .rs1_i       (regfile_rs1),
     .rs2_i       (regfile_rs2),
-    .sel_rd_i    (decode_sel_rd),
-    .imm_i       (decode_imm),
     .instr_o     (instr_q3),
-    .sel_rd_o    (execute_sel_rd),
     .alu_result_o(execute_alu_result)
   );
 

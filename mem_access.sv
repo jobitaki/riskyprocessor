@@ -36,8 +36,8 @@ module mem_access (
     endcase
   end
 
-  tri   [        31:0] data_memory_bus;
-  logic [ADDR_WIDTH:0] data_memory_addr;
+  tri   [          31:0] data_memory_bus;
+  logic [ADDR_WIDTH-1:0] data_memory_addr;
 
   assign data_memory_addr = {alu_result_i[ADDR_WIDTH:2], 2'b00};
 
