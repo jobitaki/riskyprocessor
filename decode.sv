@@ -19,13 +19,15 @@ module decode (
 
   always_comb begin
     casez (instr_i)
-      LB: begin
+      I_ALL_LOADS: begin
         sel_rs1_o = instr_i[19:15];
       end
-      ADD: begin
+
+      R_ALL: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
       end
+
       default: begin
         sel_rs1_o = '0;
         sel_rs2_o = '0;

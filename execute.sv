@@ -25,16 +25,28 @@ module execute (
 
   always_comb begin
     casez (instr_i)
-      LB: begin
+      I_ALL_LOADS: begin
         alu_oper1  = rs1_i;
         alu_oper2  = instr_i[31:20];
         alu_sel_op = ALU_ADD;
       end
 
+      R_ADD_SUB: begin
+        alu_oper1  = rs1_i;
+        alu_oper2  = (instr_i[30]) ? rs2_i : ~rs2_i + 1'b1;
+        alu_sel_op = ALU_ADD;
+      end
+
+      R_SLL: begin
+        alu_oper1  = rs1_i;
+        alu_oper2  = rs2_i;
+        alu_sel_op = ALU_SLL;
+      end
+
       default: begin
         alu_oper1  = '0;
         alu_oper2  = '0;
-        alu_sel_op = UNDEF;
+        alu_sel_op = ALU_UNDEF;
       end
     endcase
   end

@@ -25,7 +25,7 @@ module mem_access (
 
   always_comb begin
     casez (instr_i)
-      LB: begin
+      I_ALL_LOADS: begin
         re = 1'b1;
       end
 

@@ -13,7 +13,12 @@ module alu (
         result_o = oper1_i + oper2_i;
       end
 
+      ALU_SLL: begin
+        result_o = oper1_i << oper2_i;
+      end
+
       default: begin
+        result_o = 32'd0;
       end
     endcase
   end
