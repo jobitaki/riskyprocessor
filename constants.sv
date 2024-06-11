@@ -22,5 +22,8 @@ typedef enum logic [31:0] {
 typedef enum logic [4:0] {
   ALU_ADD   = 5'b00000,
   ALU_SLL   = 5'b00001,
+  ALU_SLT   = 5'b00010,
+  ALU_SLTU  = 5'b00011,
+  ALU_XOR   = 5'b00100,
   ALU_UNDEF = 5'b11111
 } alu_op_e;

@@ -17,6 +17,18 @@ module alu (
         result_o = oper1_i << oper2_i;
       end
 
+      ALU_SLT: begin
+        result_o = $signed(oper1_i) < $signed(oper2_i);
+      end
+
+      ALU_SLTU: begin
+        result_o = oper1_i < oper2_i;
+      end
+
+      ALU_XOR: begin
+        result_o = oper1_i ^ oper2_i; 
+      end
+
       default: begin
         result_o = 32'd0;
       end

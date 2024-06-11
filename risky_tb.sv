@@ -25,17 +25,8 @@ module risky_tb ();
     rst_n = 1;
 
     @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
-    @(posedge clk);
+
+    for (int i = 0; i < 50; i++) @(posedge clk);
     $finish;
   end
 

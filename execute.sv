@@ -43,6 +43,15 @@ module execute (
         alu_sel_op = ALU_SLL;
       end
 
+      R_SLT: begin
+      end
+
+      R_SLTU: begin
+      end
+
+      R_XOR: begin
+      end
+
       default: begin
         alu_oper1  = '0;
         alu_oper2  = '0;
