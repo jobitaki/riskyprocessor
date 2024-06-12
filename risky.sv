@@ -61,6 +61,8 @@ module risky (
 
   logic [31:0] regfile_rs1;
   logic [31:0] regfile_rs2;
+  logic [ 4:0] regfile_sel_rs1;
+  logic [ 4:0] regfile_sel_rs2;
   logic        writeback_we;
   logic [ 4:0] writeback_sel_rd;
   logic [31:0] writeback_data;
@@ -74,26 +76,62 @@ module risky (
       .sel_rs1_i(decode_sel_rs1),
       .sel_rs2_i(decode_sel_rs2),
       .rs1_o    (regfile_rs1),
-      .rs2_o    (regfile_rs2)
+      .rs2_o    (regfile_rs2),
+      .sel_rs1_o(regfile_sel_rs1),
+      .sel_rs2_o(regfile_sel_rs2)
   );
 
   logic [31:0] instr_q3;
   logic [31:0] execute_alu_result;
 
+  logic [ 4:0] mem_sel_rd;
+  logic [31:0] mem_data;
+  logic [ 4:0] writeback_sel_rd;
+  logic [ 1:0] fu_sel_rs1_src;
+  logic [ 1:0] fu_sel_rs2_src;
+
+  forward_unit u_forward_unit (
+    .sel_rs1_i         (regfile_sel_rs1),
+    .sel_rs2_i         (regfile_sel_rs2),
+    .mem_sel_rd_i      (mem_sel_rd),
+    .writeback_sel_rd_i(writeback_sel_rd),
+    .sel_rs1_src_o     (fu_sel_rs1_src),
+    .sel_rs2_src_o     (fu_sel_rs2_src)
+  );
+
+  logic [31:0] fu_mux_rs1;
+  logic [31:0] fu_mux_rs2;
+
+  // TODO mux the two register inputs into execute with forwarding unit
+  always_comb begin
+    case (fu_sel_rs1_src)
+      FU_SRC_REG: fu_mux_rs1 = regfile_rs1;
+      FU_SRC_MEM: fu_mux_rs1 = mem_data;
+      FU_SRC_WB:  fu_mux_rs1 = writeback_data;
+      default:    fu_mux_rs1 = '0;
+    endcase
+    
+    case (fu_sel_rs2_src)
+      FU_SRC_REG: fu_mux_rs2 = regfile_rs1;
+      FU_SRC_MEM: fu_mux_rs2 = mem_data;
+      FU_SRC_WB:  fu_mux_rs2 = writeback_data;
+      default:    fu_mux_rs2 = '0;
+    endcase
+  end
+
   execute u_execute (
     .clk,
     .rst_n,
     .instr_i     (instr_q2),
-    .rs1_i       (regfile_rs1),
-    .rs2_i       (regfile_rs2),
+    .rs1_i       (fu_mux_rs1),
+    .rs2_i       (fu_mux_rs2),
     .instr_o     (instr_q3),
     .alu_result_o(execute_alu_result)
   );
 
   tri   [31:0] data_memory_bus;
   logic [31:0] instr_q4;
-  logic [31:0] mem_data;
-  logic [31:0] mem_access_alu_result;
+  logic [31:0] mem_alu_result;
 
   mem_access u_mem_access (
     .clk,
@@ -101,15 +139,16 @@ module risky (
     .instr_i     (instr_q3),
     .alu_result_i(execute_alu_result),
     .instr_o     (instr_q4),
-    .alu_result_o(mem_access_alu_result),
-    .data_o      (mem_data)
+    .alu_result_o(mem_alu_result),
+    .data_o      (mem_data),
+    .sel_rd_o    (mem_sel_rd)
   );
 
   writeback u_writeback (
     .clk,
     .rst_n,
     .instr_i     (instr_q4),
-    .alu_result_i(mem_access_alu_result),
+    .alu_result_i(mem_alu_result),
     .data_i      (mem_data),
     .sel_rd_o    (writeback_sel_rd),
     .we_o        (writeback_we),

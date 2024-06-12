@@ -27,3 +27,9 @@ typedef enum logic [4:0] {
   ALU_XOR   = 5'b00100,
   ALU_UNDEF = 5'b11111
 } alu_op_e;
+
+typedef enum logic [1:0] {
+  FU_SRC_REG,
+  FU_SRC_MEM,
+  FU_SRC_WB
+} fu_sel_e;

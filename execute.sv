@@ -33,7 +33,7 @@ module execute (
 
       R_ADD_SUB: begin
         alu_oper1  = rs1_i;
-        alu_oper2  = (instr_i[30]) ? rs2_i : ~rs2_i + 1'b1;
+        alu_oper2  = (instr_i[30]) ? ~rs2_i + 1'b1 : rs2_i;
         alu_sel_op = ALU_ADD;
       end
 

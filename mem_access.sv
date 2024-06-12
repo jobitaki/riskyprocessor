@@ -7,7 +7,8 @@ module mem_access (
     input  logic [31:0] alu_result_i,
     output logic [31:0] instr_o,
     output logic [31:0] alu_result_o,
-    output logic [31:0] data_o
+    output logic [31:0] data_o,
+    output logic [ 4:0] sel_rd_o
 );
 
   logic re, we;
@@ -50,7 +51,22 @@ module mem_access (
   );
 
   always_ff @(posedge clk, negedge rst_n) begin
-    data_o <= data_memory_bus;
+    casez (instr_i)
+      I_ALL_LOADS: begin
+        data_o   <= data_memory_bus;
+        sel_rd_o <= instr_i[11:7];
+      end
+
+      R_ALL: begin
+        data_o   <= alu_result_i;
+        sel_rd_o <= instr_i[11:7];
+      end
+
+      default: begin
+        data_o   <= '0;
+        sel_rd_o <= '0;
+      end
+    endcase
   end
 
 endmodule
