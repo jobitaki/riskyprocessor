@@ -99,6 +99,8 @@ module risky (
     .sel_rs2_src_o     (fu_sel_rs2_src)
   );
 
+  // Forwarding unit mux
+
   logic [31:0] fu_mux_rs1;
   logic [31:0] fu_mux_rs2;
 
@@ -121,6 +123,8 @@ module risky (
     endcase
   end
 
+  logic [31:0] execute_rs2;
+
   execute u_execute (
     .clk,
     .rst_n,
@@ -129,6 +133,7 @@ module risky (
     .rs2_i       (fu_mux_rs2),
     .instr_o     (instr_q3),
     .alu_result_o(execute_alu_result),
+    .rs2_o       (execute_rs2),
     .sel_rd_o    (execute_sel_rd)
   );
 
@@ -140,6 +145,7 @@ module risky (
     .rst_n,
     .instr_i      (instr_q3),
     .alu_result_i (execute_alu_result),
+    .data_i       (execute_rs2),
     .instr_o      (instr_q4),
     .alu_result_o (mem_alu_result),
     .data_o       (mem_data),

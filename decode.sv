@@ -23,6 +23,11 @@ module decode (
         sel_rs1_o = instr_i[19:15];
       end
 
+      S_ALL: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+      end
+
       R_ALL: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];

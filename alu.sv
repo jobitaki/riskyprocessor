@@ -14,7 +14,7 @@ module alu (
       end
 
       ALU_SLL: begin
-        result_o = oper1_i << oper2_i;
+        result_o = oper1_i << oper2_i[4:0];
       end
 
       ALU_SLT: begin
@@ -27,6 +27,22 @@ module alu (
 
       ALU_XOR: begin
         result_o = oper1_i ^ oper2_i; 
+      end
+
+      ALU_SRL: begin
+        result_o = oper1_i >> oper2_i;
+      end
+
+      ALU_SRA: begin
+        result_o = oper1_i >>> oper2_i;
+      end
+
+      ALU_OR: begin
+        result_o = oper1_i | oper2_i;
+      end
+
+      ALU_AND: begin
+        result_o = oper1_i & oper2_i;
       end
 
       default: begin

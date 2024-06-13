@@ -10,7 +10,7 @@ module forward_unit (
 );
   
   always_comb begin
-    if (sel_rs1_i && sel_rs2_i) begin 
+    if (sel_rs1_i) begin 
       if (sel_rs1_i == execute_sel_rd_i) begin
         sel_rs1_src_o = FU_SRC_MEM;
       end
@@ -20,7 +20,12 @@ module forward_unit (
       else begin
         sel_rs1_src_o = FU_SRC_REG;
       end
-      
+    end
+    else begin
+      sel_rs1_src_o = FU_SRC_REG;
+    end
+
+    if (sel_rs2_i) begin
       if (sel_rs2_i == execute_sel_rd_i) begin
         sel_rs2_src_o = FU_SRC_MEM;
       end
@@ -32,7 +37,6 @@ module forward_unit (
       end
     end
     else begin
-      sel_rs1_src_o = FU_SRC_REG;
       sel_rs2_src_o = FU_SRC_REG;
     end
   end
