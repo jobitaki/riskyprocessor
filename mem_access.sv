@@ -15,13 +15,22 @@ module mem_access (
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
-      instr_o <= '0;
+      instr_o      <= '0;
       alu_result_o <= '0;
     end
     else begin
-      instr_o <= instr_i;
+      instr_o      <= instr_i;
       alu_result_o <= alu_result_i;
     end
+  end
+  
+  // For bypassing to execute stage
+  always_comb begin
+    casez (instr_o)
+      I_ALL_LOADS: sel_rd_o = instr_o[11:7];
+      R_ALL:       sel_rd_o = instr_o[11:7];
+      default:     sel_rd_o = '0;
+    endcase
   end
 
   always_comb begin
@@ -51,22 +60,8 @@ module mem_access (
   );
 
   always_ff @(posedge clk, negedge rst_n) begin
-    casez (instr_i)
-      I_ALL_LOADS: begin
-        data_o   <= data_memory_bus;
-        sel_rd_o <= instr_i[11:7];
-      end
-
-      R_ALL: begin
-        data_o   <= alu_result_i;
-        sel_rd_o <= instr_i[11:7];
-      end
-
-      default: begin
-        data_o   <= '0;
-        sel_rd_o <= '0;
-      end
-    endcase
+    if (!rst_n) data_o <= '0;
+    else        data_o <= data_memory_bus;
   end
 
 endmodule

@@ -7,16 +7,26 @@ module execute (
     input  logic [31:0] rs1_i,
     input  logic [31:0] rs2_i,
     output logic [31:0] instr_o,
-    output logic [31:0] alu_result_o
+    output logic [31:0] alu_result_o,
+    output logic [ 4:0] sel_rd_o
 );
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
       instr_o  <= '0;
+      sel_rd_o <= '0;
     end
     else begin
       instr_o  <= instr_i;
     end
+  end
+
+  always_comb begin
+    casez (instr_o)
+      I_ALL_LOADS: sel_rd_o = instr_o[11:7];
+      R_ALL:       sel_rd_o = instr_o[11:7];
+      default:     sel_rd_o = '0;
+    endcase
   end
 
   logic [31:0] alu_oper1, alu_oper2;

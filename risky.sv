@@ -86,15 +86,15 @@ module risky (
 
   logic [ 4:0] mem_sel_rd;
   logic [31:0] mem_data;
-  logic [ 4:0] writeback_sel_rd;
+  logic [ 4:0] execute_sel_rd;
   logic [ 1:0] fu_sel_rs1_src;
   logic [ 1:0] fu_sel_rs2_src;
 
   forward_unit u_forward_unit (
     .sel_rs1_i         (regfile_sel_rs1),
     .sel_rs2_i         (regfile_sel_rs2),
+    .execute_sel_rd_i  (execute_sel_rd),
     .mem_sel_rd_i      (mem_sel_rd),
-    .writeback_sel_rd_i(writeback_sel_rd),
     .sel_rs1_src_o     (fu_sel_rs1_src),
     .sel_rs2_src_o     (fu_sel_rs2_src)
   );
@@ -106,15 +106,15 @@ module risky (
   always_comb begin
     case (fu_sel_rs1_src)
       FU_SRC_REG: fu_mux_rs1 = regfile_rs1;
-      FU_SRC_MEM: fu_mux_rs1 = mem_data;
-      FU_SRC_WB:  fu_mux_rs1 = writeback_data;
+      FU_SRC_MEM: fu_mux_rs1 = execute_alu_result;
+      FU_SRC_WB:  fu_mux_rs1 = mem_data;
       default:    fu_mux_rs1 = '0;
     endcase
     
     case (fu_sel_rs2_src)
       FU_SRC_REG: fu_mux_rs2 = regfile_rs1;
-      FU_SRC_MEM: fu_mux_rs2 = mem_data;
-      FU_SRC_WB:  fu_mux_rs2 = writeback_data;
+      FU_SRC_MEM: fu_mux_rs2 = execute_alu_result;
+      FU_SRC_WB:  fu_mux_rs2 = mem_data;
       default:    fu_mux_rs2 = '0;
     endcase
   end
@@ -126,7 +126,8 @@ module risky (
     .rs1_i       (fu_mux_rs1),
     .rs2_i       (fu_mux_rs2),
     .instr_o     (instr_q3),
-    .alu_result_o(execute_alu_result)
+    .alu_result_o(execute_alu_result),
+    .sel_rd_o    (execute_sel_rd)
   );
 
   tri   [31:0] data_memory_bus;
