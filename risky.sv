@@ -102,19 +102,21 @@ module risky (
   logic [31:0] fu_mux_rs1;
   logic [31:0] fu_mux_rs2;
 
-  // TODO mux the two register inputs into execute with forwarding unit
+  logic [31:0] mem_data_bypass;
+  logic [31:0] writeback_data_bypass;
+
   always_comb begin
     case (fu_sel_rs1_src)
       FU_SRC_REG: fu_mux_rs1 = regfile_rs1;
       FU_SRC_MEM: fu_mux_rs1 = mem_data_bypass;
-      FU_SRC_WB:  fu_mux_rs1 = mem_data;
+      FU_SRC_WB:  fu_mux_rs1 = writeback_data_bypass;
       default:    fu_mux_rs1 = '0;
     endcase
     
     case (fu_sel_rs2_src)
       FU_SRC_REG: fu_mux_rs2 = regfile_rs2;
       FU_SRC_MEM: fu_mux_rs2 = mem_data_bypass;
-      FU_SRC_WB:  fu_mux_rs2 = mem_data;
+      FU_SRC_WB:  fu_mux_rs2 = writeback_data_bypass;
       default:    fu_mux_rs2 = '0;
     endcase
   end
@@ -132,7 +134,6 @@ module risky (
 
   logic [31:0] instr_q4;
   logic [31:0] mem_alu_result;
-  logic [31:0] mem_data_bypass;
 
   mem_access u_mem_access (
     .clk,
@@ -149,12 +150,13 @@ module risky (
   writeback u_writeback (
     .clk,
     .rst_n,
-    .instr_i     (instr_q4),
-    .alu_result_i(mem_alu_result),
-    .data_i      (mem_data),
-    .sel_rd_o    (writeback_sel_rd),
-    .we_o        (writeback_we),
-    .data_o      (writeback_data)
+    .instr_i      (instr_q4),
+    .alu_result_i (mem_alu_result),
+    .data_i       (mem_data),
+    .data_bypass_o(writeback_data_bypass),
+    .sel_rd_o     (writeback_sel_rd),
+    .we_o         (writeback_we),
+    .data_o       (writeback_data)
   );
 
 endmodule : risky

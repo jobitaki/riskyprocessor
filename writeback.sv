@@ -6,6 +6,7 @@ module writeback (
     input  logic [31:0] instr_i,
     input  logic [31:0] alu_result_i,
     input  logic [31:0] data_i,
+    output logic [31:0] data_bypass_o,
     output logic [ 4:0] sel_rd_o,
     output logic        we_o,
     output logic [31:0] data_o
@@ -13,6 +14,8 @@ module writeback (
 
   // The writeback stage should write what is in data or alu_result into the rd
   // register.
+  
+  assign data_bypass_o = data_i;
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
