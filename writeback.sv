@@ -74,7 +74,7 @@ module writeback (
         R_ALL: begin
           sel_rd_o <= instr_i[11:7];
           we_o     <= 1'b1;
-          data_o   <= data_i;
+          data_o   <= alu_result_i;
         end
 
         default: begin

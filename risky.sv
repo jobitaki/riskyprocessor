@@ -106,14 +106,14 @@ module risky (
   always_comb begin
     case (fu_sel_rs1_src)
       FU_SRC_REG: fu_mux_rs1 = regfile_rs1;
-      FU_SRC_MEM: fu_mux_rs1 = execute_alu_result;
+      FU_SRC_MEM: fu_mux_rs1 = mem_data_bypass;
       FU_SRC_WB:  fu_mux_rs1 = mem_data;
       default:    fu_mux_rs1 = '0;
     endcase
     
     case (fu_sel_rs2_src)
-      FU_SRC_REG: fu_mux_rs2 = regfile_rs1;
-      FU_SRC_MEM: fu_mux_rs2 = execute_alu_result;
+      FU_SRC_REG: fu_mux_rs2 = regfile_rs2;
+      FU_SRC_MEM: fu_mux_rs2 = mem_data_bypass;
       FU_SRC_WB:  fu_mux_rs2 = mem_data;
       default:    fu_mux_rs2 = '0;
     endcase
@@ -130,19 +130,20 @@ module risky (
     .sel_rd_o    (execute_sel_rd)
   );
 
-  tri   [31:0] data_memory_bus;
   logic [31:0] instr_q4;
   logic [31:0] mem_alu_result;
+  logic [31:0] mem_data_bypass;
 
   mem_access u_mem_access (
     .clk,
     .rst_n,
-    .instr_i     (instr_q3),
-    .alu_result_i(execute_alu_result),
-    .instr_o     (instr_q4),
-    .alu_result_o(mem_alu_result),
-    .data_o      (mem_data),
-    .sel_rd_o    (mem_sel_rd)
+    .instr_i      (instr_q3),
+    .alu_result_i (execute_alu_result),
+    .instr_o      (instr_q4),
+    .alu_result_o (mem_alu_result),
+    .data_o       (mem_data),
+    .data_bypass_o(mem_data_bypass),
+    .sel_rd_o     (mem_sel_rd)
   );
 
   writeback u_writeback (

@@ -8,6 +8,7 @@ module mem_access (
     output logic [31:0] instr_o,
     output logic [31:0] alu_result_o,
     output logic [31:0] data_o,
+    output logic [31:0] data_bypass_o,
     output logic [ 4:0] sel_rd_o
 );
 
@@ -50,6 +51,7 @@ module mem_access (
   logic [ADDR_WIDTH-1:0] data_memory_addr;
 
   assign data_memory_addr = {alu_result_i[ADDR_WIDTH:2], 2'b00};
+  assign data_bypass_o    = (re) ? data_memory_bus : '0;
 
   data_memory u_data_memory (
     .clk,
@@ -60,8 +62,8 @@ module mem_access (
   );
 
   always_ff @(posedge clk, negedge rst_n) begin
-    if (!rst_n) data_o <= '0;
-    else        data_o <= data_memory_bus;
+    if (!rst_n)    data_o <= '0;
+    else if (re) data_o <= data_memory_bus;
   end
 
 endmodule
