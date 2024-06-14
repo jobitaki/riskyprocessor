@@ -1,9 +1,13 @@
 `default_nettype none
 
+//
+//  Module 'forward_unit'
+//
+//  Detects data hazards and controls the mux sel into the execute stage.
+//
 module forward_unit (
     input  logic [4:0] sel_rs1_i,
     input  logic [4:0] sel_rs2_i, 
-    input  logic [4:0] ex_stage_sel_rd_i,  // rd pointer of current instr in EX stage
     input  logic [4:0] mem_stage_sel_rd_i, // rd pointer of current instr in MEM stage
     input  logic [4:0] wb_stage_sel_rd_i,  // rd pointer of current instr in WB stage
     output logic [1:0] sel_rs1_src_o,      // Bypass to execute

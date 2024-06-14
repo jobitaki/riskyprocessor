@@ -1,11 +1,18 @@
 `default_nettype none
 
+//
+//  Module 'mem_access'
+//
+//  The MEM stage of the pipeline. Instructions requiring reads and writes
+//  from/to memory make use of this stage.
+//
 module mem_access (
     input  logic        clk,
     input  logic        rst_n,
     input  logic [31:0] instr_i,
     input  logic [31:0] alu_result_i,
     input  logic [31:0] data_i,
+    input  logic        stall_i,
     output logic [31:0] instr_o,
     output logic [31:0] alu_result_o,
     output logic [31:0] data_o,
@@ -27,7 +34,7 @@ module mem_access (
     end
   end
   
-  // We output sel_rd_o for the forwarding unit to know if forwarding is needed
+  // We output sel_rd_o for the forwarding unit to know if forwarding is needed.
   always_comb begin
     casez (instr_o)
       I_ALL_LOADS: sel_rd_o = instr_o[11:7];
@@ -48,6 +55,7 @@ module mem_access (
     endcase
   end
 
+  // Based on the instruction, we either read or write from/to memory.
   always_comb begin
     casez (instr_i)
       I_ALL_LOADS: begin
@@ -138,7 +146,7 @@ module mem_access (
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) data_o <= '0;
-    else        data_o <= rd_data;
+    else                   data_o <= rd_data;
   end
 
 endmodule

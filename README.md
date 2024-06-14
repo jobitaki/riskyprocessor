@@ -9,8 +9,10 @@ My attempt at a basic RISC-V core (RISCV32I)
 - [ ] Little endian loading
 - [ ] Arithmetic instructions
 - [x] Data forwarding
+- [ ] Load-store forwarding
 - [ ] Jump instructions
 - [ ] Branch instructions
+- [ ] Remove instruction decoder in other stages
 
 Random thoughts:
 
@@ -41,4 +43,20 @@ AND x28, x29, x10
 
 Here, AND must access the alu result value of the ADD instruction. 
 
-So, the hazard detector should detect whether the previous instruction was a load or something else. Or is there another way? Could we switch the bypass data based on the instruction being executed? I think that's an easier way. 
+So, the hazard detector should detect whether the previous instruction was a load or something else. Or is there another way? Could we switch the bypass data based on the instruction being executed? I think that's an easier way. And it works!
+
+The next problem is how to deal with LW immediately after a SW. The answer is to do a load-store forwarding. However, we can't just compare two addresses and call it a day. We have to make sure load before store. Or do we? What does a load do? A load first adds, then reads into its rd. 
+
+After that, let's finish with other arithmetic instructions, then do the jump instructions, possibly the hardest part. For now, we will not do branch prediction. 
+
+Finally, we can start thinking about interrupts, cache, and making this cpu usable in an fpga. 
+
+Things to think about:
+- Every stage in the pipeline has an instruction decoder. This can't be ideal. 
+  - Although it is highly readable, it isn't very efficient. It uses a lot of resources.
+  - Keep this architecture for now, until we can figure out what kind of control signals we actually need.
+
+FIX ASAP: Default case to outside case statement for values
+
+Stalling: Bubbles should be inserted after execute because we need to know whether addresses clash. 
+Fetch no longer needs a FSM. 

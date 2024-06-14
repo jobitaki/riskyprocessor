@@ -1,18 +1,17 @@
 `default_nettype none
 
+//
+//  Module 'risky'
+//
+//  The top module of the Risky RISCV32I processor.
+//
 module risky (
     input logic clk,
     input logic rst_n
 );
 
-  // ALU + MUXES
-  // REGFILE
-  // MDR, MAR
-  // DECODER
-  // IR
-  // PC
-
   logic fetch_re;
+  logic execute_stall;
   logic [31:0] instr_q1;
   tri [31:0] instr_memory_bus;
 
@@ -20,7 +19,7 @@ module risky (
       .clk,
       .rst_n,
       .instr_i(instr_memory_bus),
-      .stall_i(1'b0),
+      .stall_i(execute_stall),
       .re_o   (fetch_re),
       .instr_o(instr_q1)
   );
@@ -54,6 +53,7 @@ module risky (
       .clk,
       .rst_n,
       .instr_i  (instr_q1),
+      .stall_i  (execute_stall),
       .sel_rs1_o(decode_sel_rs1),
       .sel_rs2_o(decode_sel_rs2),
       .instr_o  (instr_q2)
@@ -134,7 +134,8 @@ module risky (
     .instr_o     (instr_q3),
     .alu_result_o(execute_alu_result),
     .rs2_o       (execute_rs2),
-    .sel_rd_o    (execute_sel_rd)
+    .sel_rd_o    (execute_sel_rd),
+    .stall_o     (execute_stall)
   );
 
   logic [31:0] instr_q4;
@@ -148,6 +149,7 @@ module risky (
     .instr_i      (instr_q3),
     .alu_result_i (execute_alu_result),
     .data_i       (execute_rs2),
+    .stall_i      (execute_stall),
     .instr_o      (instr_q4),
     .alu_result_o (mem_alu_result),
     .data_o       (mem_data),
