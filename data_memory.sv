@@ -1,5 +1,11 @@
 `default_nettype none
 
+// 
+//  Module 'data_memory'
+//
+//  Basic memory with combinational read, sequential write. 
+//  Will be replaced with cache system later on. 
+//
 module data_memory (
     input logic                  clk,
     input logic [ADDR_WIDTH-1:0] addr_i,

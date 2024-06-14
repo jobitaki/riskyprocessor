@@ -8,7 +8,7 @@ module execute (
     input  logic [31:0] rs2_i,
     output logic [31:0] instr_o,
     output logic [31:0] alu_result_o,
-    output logic [31:0] rs2_o, // Necessary for store operations
+    output logic [31:0] rs2_o,        // Necessary for store operations
     output logic [ 4:0] sel_rd_o
 );
 

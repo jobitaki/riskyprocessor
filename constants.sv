@@ -42,7 +42,7 @@ typedef enum logic [4:0] {
 } alu_op_e;
 
 typedef enum logic [1:0] {
-  FU_SRC_REG,
-  FU_SRC_MEM,
-  FU_SRC_WB
+  FU_SRC_REG = 2'b00,
+  FU_SRC_MEM = 2'b01,
+  FU_SRC_WB  = 2'b10
 } fu_sel_e;

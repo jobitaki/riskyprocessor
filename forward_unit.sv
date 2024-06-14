@@ -1,20 +1,22 @@
 `default_nettype none
 
 module forward_unit (
-    input  logic [ 4:0] sel_rs1_i,
-    input  logic [ 4:0] sel_rs2_i, 
-    input  logic [ 4:0] execute_sel_rd_i,
-    input  logic [ 4:0] mem_sel_rd_i,
-    output logic [ 1:0] sel_rs1_src_o,
-    output logic [ 1:0] sel_rs2_src_o
+    input  logic [4:0] sel_rs1_i,
+    input  logic [4:0] sel_rs2_i, 
+    input  logic [4:0] ex_stage_sel_rd_i,  // rd pointer of current instr in EX stage
+    input  logic [4:0] mem_stage_sel_rd_i, // rd pointer of current instr in MEM stage
+    input  logic [4:0] wb_stage_sel_rd_i,  // rd pointer of current instr in WB stage
+    output logic [1:0] sel_rs1_src_o,      // Bypass to execute
+    output logic [1:0] sel_rs2_src_o       // Bypass to execute
 );
   
+  // Logic to select rs1 source into execute
   always_comb begin
     if (sel_rs1_i) begin 
-      if (sel_rs1_i == execute_sel_rd_i) begin
+      if (sel_rs1_i == mem_stage_sel_rd_i) begin
         sel_rs1_src_o = FU_SRC_MEM;
       end
-      else if (sel_rs1_i == mem_sel_rd_i) begin
+      else if (sel_rs1_i == wb_stage_sel_rd_i) begin
         sel_rs1_src_o = FU_SRC_WB;
       end
       else begin
@@ -24,12 +26,15 @@ module forward_unit (
     else begin
       sel_rs1_src_o = FU_SRC_REG;
     end
+  end
 
+  // Logic to select rs2 source into execute
+  always_comb begin
     if (sel_rs2_i) begin
-      if (sel_rs2_i == execute_sel_rd_i) begin
+      if (sel_rs2_i == mem_stage_sel_rd_i) begin
         sel_rs2_src_o = FU_SRC_MEM;
       end
-      else if (sel_rs2_i == mem_sel_rd_i) begin
+      else if (sel_rs2_i == wb_stage_sel_rd_i) begin
         sel_rs2_src_o = FU_SRC_WB;
       end
       else begin

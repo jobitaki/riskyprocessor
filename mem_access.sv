@@ -36,6 +36,18 @@ module mem_access (
     endcase
   end
 
+  // Data to bypass depends on instruction. If load instruction, send memory read.
+  // Otherwise, just send alu result. 
+  always_comb begin
+    casez (instr_i)
+      I_ALL_LOADS: begin
+        data_bypass_o = rd_data;
+      end
+
+      default: data_bypass_o = alu_result_i;
+    endcase
+  end
+
   always_comb begin
     casez (instr_i)
       I_ALL_LOADS: begin
@@ -53,8 +65,6 @@ module mem_access (
     endcase
   end
 
-  // Data slicing for load operations
-
   // Data slicing for store operations
   always_comb begin
     casez (instr_i)
@@ -70,7 +80,6 @@ module mem_access (
 
   assign data_memory_bus  = (we) ? wr_data : 'z;
   assign data_memory_addr = {alu_result_i[ADDR_WIDTH:2], 2'b00};
-  assign data_bypass_o    = rd_data;
 
   // Data slicing for load operations
   always_comb begin

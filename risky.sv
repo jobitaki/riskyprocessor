@@ -93,8 +93,8 @@ module risky (
   forward_unit u_forward_unit (
     .sel_rs1_i         (regfile_sel_rs1),
     .sel_rs2_i         (regfile_sel_rs2),
-    .execute_sel_rd_i  (execute_sel_rd),
-    .mem_sel_rd_i      (mem_sel_rd),
+    .mem_stage_sel_rd_i(execute_sel_rd),
+    .wb_stage_sel_rd_i (mem_sel_rd),
     .sel_rs1_src_o     (fu_sel_rs1_src),
     .sel_rs2_src_o     (fu_sel_rs2_src)
   );
@@ -139,6 +139,8 @@ module risky (
 
   logic [31:0] instr_q4;
   logic [31:0] mem_alu_result;
+
+  // TODO implement hazard detection for mem_access stage store operations
 
   mem_access u_mem_access (
     .clk,
