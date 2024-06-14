@@ -14,7 +14,7 @@ module mem_access (
 );
 
   logic re, we;
-  logic [31:0] wr_data;
+  logic [31:0] wr_data, rd_data;
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
@@ -53,6 +53,8 @@ module mem_access (
     endcase
   end
 
+  // Data slicing for load operations
+
   // Data slicing for store operations
   always_comb begin
     casez (instr_i)
@@ -68,7 +70,54 @@ module mem_access (
 
   assign data_memory_bus  = (we) ? wr_data : 'z;
   assign data_memory_addr = {alu_result_i[ADDR_WIDTH:2], 2'b00};
-  assign data_bypass_o    = (re) ? data_memory_bus : '0;
+  assign data_bypass_o    = rd_data;
+
+  // Data slicing for load operations
+  always_comb begin
+    casez (instr_i)
+      I_LB: begin
+        case (alu_result_i[1:0])
+          2'b00:   rd_data <= {{24{data_memory_bus[7]}}, data_memory_bus[7:0]};
+          2'b01:   rd_data <= {{24{data_memory_bus[15]}}, data_memory_bus[15:8]};
+          2'b10:   rd_data <= {{24{data_memory_bus[23]}}, data_memory_bus[23:16]};
+          2'b11:   rd_data <= {{24{data_memory_bus[31]}}, data_memory_bus[31:24]};
+          default: rd_data <= '0;
+        endcase
+      end
+
+      I_LBU: begin
+        case (alu_result_i[1:0])
+          2'b00:   rd_data <= {24'd0, data_memory_bus[7:0]};
+          2'b01:   rd_data <= {24'd0, data_memory_bus[15:8]};
+          2'b10:   rd_data <= {24'd0, data_memory_bus[23:16]};
+          2'b11:   rd_data <= {24'd0, data_memory_bus[31:24]};
+          default: rd_data <= '0;
+        endcase
+      end
+
+      I_LH: begin
+        case (alu_result_i[1:0])
+          2'b00:   rd_data <= {{16{data_memory_bus[15]}}, data_memory_bus[15:0]};
+          2'b10:   rd_data <= {{16{data_memory_bus[15]}}, data_memory_bus[31:16]};
+          default: rd_data <= '0;
+        endcase
+      end
+
+      I_LHU: begin
+        case (alu_result_i[1:0])
+          2'b00:   rd_data <= {16'd0, data_memory_bus[15:0]};
+          2'b10:   rd_data <= {16'd0, data_memory_bus[31:16]};
+          default: rd_data <= '0;
+        endcase
+      end
+
+      I_LW: begin
+        rd_data  <= data_memory_bus;
+      end
+      
+      default: rd_data <= '0;
+    endcase
+  end
 
   data_memory u_data_memory (
     .clk,
@@ -79,8 +128,8 @@ module mem_access (
   );
 
   always_ff @(posedge clk, negedge rst_n) begin
-    if (!rst_n)  data_o <= '0;
-    else if (re) data_o <= data_memory_bus;
+    if (!rst_n) data_o <= '0;
+    else        data_o <= rd_data;
   end
 
 endmodule
