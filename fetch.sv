@@ -5,6 +5,7 @@ module fetch (
     input  logic rst_n,
     input  logic [31:0] instr_i,
     input  logic stall_i,
+    input  logic flush_i,
     output logic re_o,
     output logic [31:0] instr_o
 );
@@ -12,13 +13,18 @@ module fetch (
   // Instruction pipeline
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) instr_o <= '0;
-    else if (!stall_i) begin
+    else if (flush_i) begin
+      instr_o <= '0;
+    end
+    else if (stall_i)
+      instr_o <= instr_o;
+    else begin
       instr_o <= instr_i;
     end
   end
 
   always_comb begin
-    if (!stall_i) re_o = 1'b1;
+    if (!stall_i && !flush_i) re_o = 1'b1;
     else          re_o = 1'b0;
   end
 

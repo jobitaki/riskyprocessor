@@ -13,6 +13,10 @@ module alu (
         result_o = oper1_i + oper2_i;
       end
 
+      ALU_SUB: begin
+        result_o = oper1_i - oper2_i;
+      end
+
       ALU_SLL: begin
         result_o = oper1_i << oper2_i[4:0];
       end

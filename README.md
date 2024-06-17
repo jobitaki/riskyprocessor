@@ -60,3 +60,7 @@ FIX ASAP: Default case to outside case statement for values
 
 Stalling: Bubbles should be inserted after execute because we need to know whether addresses clash. 
 Fetch no longer needs a FSM. 
+
+With a stall, execute should insert a NOP, and fetch and decode should halt. mem and wb may work as normal. 
+
+Now I want to work on branch instructions. Branching will also do stalling, but not like the other ones. Branch will need to stall fetch only. So fetch needs a system where it can be stalled by two signals. Let's call it flush, for pipeline flush. Problem: how do I detect branch instructions in fetch?
