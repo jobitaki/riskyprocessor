@@ -64,6 +64,12 @@ module decode (
 
   always_comb begin
     unique casez (instr_i)
+      // Branch operations
+
+      B_BEQ: begin
+        
+      end
+
       // Load operations
 
       I_LB: begin
