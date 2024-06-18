@@ -8,19 +8,20 @@
 //
 module decode (
     input  logic        clk,
-    input  logic        rst_n,
-    input  logic [31:0] instr_i,
-    input  logic        stall_i,
-    output logic [ 4:0] sel_rs1_o,
-    output logic [ 4:0] sel_rs2_o,
-    output logic [ 4:0] sel_rd_o,
-    output alu_op_e     alu_op_o,
-    output alu_src_e    alu_src1_o,
-    output alu_src_e    alu_src2_o,
-    output logic        mem_re_o,
-    output logic        mem_we_o, 
-    output data_size_e  mem_size_o,
-    output logic [31:0] imm_o
+    input  logic        rst_n,       
+    input  logic [31:0] instr_i,      // Instruction in
+    input  logic        stall_i,      // Stall pipeline up to execute
+    output logic [ 4:0] sel_rs1_o,    // Register 1 id 
+    output logic [ 4:0] sel_rs2_o,    // Register 2 id
+    output logic [ 4:0] sel_rd_o,     // Destination register id
+    output alu_op_e     alu_op_o,     // ALU opcode
+    output alu_src_e    alu_src1_o,   // ALU mux sel
+    output alu_src_e    alu_src2_o,   // ALU mux sel
+    output logic        mem_re_o,     // Memory read enable
+    output logic        mem_we_o,     // Memory write enable
+    output data_size_e  mem_size_o,   // Size and signedness of memory instr
+    output logic [31:0] imm_o,        // Immediate value
+    output logic        branch_o      // True if instr in front is branch
 );
 
   // The instruction decode stage should take in a 32-bit instruction and read
@@ -34,6 +35,7 @@ module decode (
   logic        mem_re, mem_we;
   data_size_e  mem_size;
   logic [31:0] imm;
+  logic        branch;
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin       
@@ -45,6 +47,7 @@ module decode (
       mem_we_o   <= '0;
       mem_size   <= '0;
       imm_o      <= '0;
+      branch_o   <= '0;
     end
     else if (!stall_i) begin
       sel_rd_o   <= sel_rd;
@@ -55,6 +58,7 @@ module decode (
       mem_we_o   <= mem_we;
       mem_size_o <= mem_size;
       imm_o      <= imm;
+      branch_o   <= branch;
     end
   end
 
@@ -67,7 +71,31 @@ module decode (
       // Branch operations
 
       B_BEQ: begin
-        
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+        sel_rd    = '0;
+        alu_op    = ALU_XOR;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_RS2;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
+        branch    = 1'b1;
+      end
+      
+      B_BNE: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+        sel_rd    = '0;
+        alu_op    = ALU_XOR;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_RS2;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
+        branch    = 1'b1;
       end
 
       // Load operations
@@ -84,6 +112,7 @@ module decode (
         mem_we    = 1'b0;
         mem_size  = BYTE_S;
         imm       = instr_i[31:20];
+        branch    = 1'b0;
       end
 
       I_LBU: begin
@@ -98,6 +127,7 @@ module decode (
         mem_we    = 1'b0;
         mem_size  = BYTE_U;
         imm       = instr_i[31:20];
+        branch    = 1'b0;
       end
 
       I_LH: begin
@@ -112,6 +142,7 @@ module decode (
         mem_we    = 1'b0;
         mem_size  = HALF_S;
         imm       = instr_i[31:20];
+        branch    = 1'b0;
       end
 
       I_LHU: begin
@@ -126,6 +157,7 @@ module decode (
         mem_we    = 1'b0;
         mem_size  = HALF_U;
         imm       = instr_i[31:20];
+        branch    = 1'b0;
       end
 
       I_LW: begin
@@ -139,7 +171,7 @@ module decode (
         mem_we    = 1'b0;
         mem_size  = WORD;
         imm       = instr_i[31:20];
-        $display("LW decode %h, %d", instr_i, sel_rd);
+        branch    = 1'b0;
       end
 
       // Store operations
@@ -155,6 +187,7 @@ module decode (
         mem_we    = 1'b1;
         mem_size  = BYTE_U;
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
+        branch    = 1'b0;
       end
 
       S_SH: begin
@@ -168,6 +201,7 @@ module decode (
         mem_we    = 1'b1;
         mem_size  = HALF_U;
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
+        branch    = 1'b0;
       end
 
       S_SW: begin
@@ -181,6 +215,7 @@ module decode (
         mem_we    = 1'b1;
         mem_size  = WORD;
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
+        branch    = 1'b0;
       end
 
       // Arithmetic operations
@@ -194,8 +229,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_SUB: begin
@@ -207,8 +243,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_SLL: begin
@@ -220,8 +257,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_SLT: begin
@@ -233,8 +271,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
       
       R_SLTU: begin
@@ -246,8 +285,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_XOR: begin
@@ -259,8 +299,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_SRL: begin
@@ -272,8 +313,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_SRA: begin
@@ -285,8 +327,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_OR: begin
@@ -298,8 +341,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       R_AND: begin
@@ -311,8 +355,9 @@ module decode (
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
         mem_we    = 1'b0;
-        mem_size  = '0;
+        mem_size  = UNDEF;
         imm       = '0;
+        branch    = 1'b0;
       end
 
       default: begin
@@ -326,6 +371,7 @@ module decode (
         mem_we    = '0;
         mem_size  = '0;
         imm       = '0;
+        branch    = '0;
       end
     endcase
   end

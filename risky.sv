@@ -10,32 +10,42 @@ module risky (
     input logic rst_n
 );
 
-  logic fetch_re;
-  logic execute_stall;
+  logic        fetch_re;
+  logic        execute_stall;
   logic [31:0] instr_q1;
   tri   [31:0] instr_memory_bus;
+  logic        decode_branch;
+  logic        execute_branch_taken;
 
   fetch u_fetch (
       .clk,
       .rst_n,
-      .instr_i(instr_memory_bus),
-      .stall_i(execute_stall),
-      .flush_i(1'b0),
-      .re_o   (fetch_re),
-      .instr_o(instr_q1)
+      .instr_i         (instr_memory_bus),
+      .stall_i         (execute_stall),
+      .branch_resolve_i(decode_branch),
+      .re_o            (fetch_re),
+      .instr_o         (instr_q1)
   );
 
   logic [31:0] pc;
   logic [31:0] pc_i;
 
-  // TODO change into a mux
-  assign pc_i = pc + 4;
+  always_comb begin
+    if (execute_branch_taken) begin
+      pc_i = pc + decode_imm;
+    end else begin
+      pc_i = pc + 4;
+    end
+  end
+
+  logic pc_en;
+  assign pc_en = fetch_re | decode_branch;
 
   program_counter u_program_counter (
       .clk,
       .rst_n,
       .pc_i,
-      .en_i(fetch_re),
+      .en_i(pc_en),
       .pc_o(pc)
   );
 
@@ -69,6 +79,7 @@ module risky (
       .mem_we_o  (decode_mem_we),
       .mem_size_o(decode_mem_size),
       .imm_o     (decode_imm),
+      .branch_o  (decode_branch)
   );
 
   logic [31:0] regfile_rs1, regfile_rs2;
@@ -98,12 +109,12 @@ module risky (
   logic [ 1:0] fu_sel_rs1_src, fu_sel_rs2_src;
 
   forward_unit u_forward_unit (
-    .sel_rs1_i         (regfile_sel_rs1),
-    .sel_rs2_i         (regfile_sel_rs2),
-    .mem_stage_sel_rd_i(execute_sel_rd),
-    .wb_stage_sel_rd_i (memacc_sel_rd),
-    .sel_rs1_src_o     (fu_sel_rs1_src),
-    .sel_rs2_src_o     (fu_sel_rs2_src)
+      .sel_rs1_i         (regfile_sel_rs1),
+      .sel_rs2_i         (regfile_sel_rs2),
+      .mem_stage_sel_rd_i(execute_sel_rd),
+      .wb_stage_sel_rd_i (memacc_sel_rd),
+      .sel_rs1_src_o     (fu_sel_rs1_src),
+      .sel_rs2_src_o     (fu_sel_rs2_src)
   );
 
   // Forwarding unit mux
@@ -134,25 +145,27 @@ module risky (
   data_size_e  execute_mem_size;
 
   execute u_execute (
-    .clk,
-    .rst_n,
-    .sel_rd_i    (decode_sel_rd),
-    .alu_op_i    (decode_alu_op),
-    .alu_src1_i  (decode_alu_src1),
-    .alu_src2_i  (decode_alu_src2),
-    .mem_re_i    (decode_mem_re),
-    .mem_we_i    (decode_mem_we),
-    .mem_size_i  (decode_mem_size),
-    .imm_i       (decode_imm),
-    .rs1_i       (fu_mux_rs1),
-    .rs2_i       (fu_mux_rs2),
-    .sel_rd_o    (execute_sel_rd),
-    .mem_re_o    (execute_mem_re),
-    .mem_we_o    (execute_mem_we),
-    .mem_size_o  (execute_mem_size),
-    .alu_result_o(execute_alu_result),
-    .rs2_o       (execute_rs2),
-    .stall_o     (execute_stall)
+      .clk,
+      .rst_n,
+      .sel_rd_i      (decode_sel_rd),
+      .alu_op_i      (decode_alu_op),
+      .alu_src1_i    (decode_alu_src1),
+      .alu_src2_i    (decode_alu_src2),
+      .mem_re_i      (decode_mem_re),
+      .mem_we_i      (decode_mem_we),
+      .mem_size_i    (decode_mem_size),
+      .imm_i         (decode_imm),
+      .branch_i      (decode_branch),
+      .rs1_i         (fu_mux_rs1),
+      .rs2_i         (fu_mux_rs2),
+      .sel_rd_o      (execute_sel_rd),
+      .mem_re_o      (execute_mem_re),
+      .mem_we_o      (execute_mem_we),
+      .mem_size_o    (execute_mem_size),
+      .alu_result_o  (execute_alu_result),
+      .rs2_o         (execute_rs2),
+      .stall_o       (execute_stall),
+      .branch_taken_o(execute_branch_taken)
   );
 
   logic [31:0] memacc_alu_result;

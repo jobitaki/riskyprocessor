@@ -11,6 +11,7 @@ module execute (
     input  logic        mem_we_i,
     input  data_size_e  mem_size_i,
     input  logic [31:0] imm_i,
+    input  logic        branch_i,
     input  logic [31:0] rs1_i,
     input  logic [31:0] rs2_i,
     output logic [ 4:0] sel_rd_o,
@@ -19,13 +20,16 @@ module execute (
     output data_size_e  mem_size_o,
     output logic [31:0] alu_result_o,
     output logic [31:0] rs2_o,        // Necessary for store operations
-    output logic        stall_o
+    output logic        stall_o,
+    output logic        branch_taken_o 
 );
 
   logic        set_was_store;     // Sets the was_store value
   logic        was_store;         // Marks if previous operation was a store op
   logic [31:0] was_store_address; // The address of the previous store
-  logic [31:0] alu_result;
+  logic [31:0] alu_result;        // Result of ALU 
+
+  assign branch_taken_o = branch_i & alu_result[0];
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
