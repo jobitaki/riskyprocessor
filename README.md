@@ -63,4 +63,6 @@ Fetch no longer needs a FSM.
 
 With a stall, execute should insert a NOP, and fetch and decode should halt. mem and wb may work as normal. 
 
-Now I want to work on branch instructions. Branching will also do stalling, but not like the other ones. Branch will need to stall fetch only. So fetch needs a system where it can be stalled by two signals. Let's call it flush, for pipeline flush. Problem: how do I detect branch instructions in fetch?
+Now I want to work on branch instructions. Branching will also do stalling, but not like the other ones. Branch will need to stall fetch only. So fetch needs a system where it can be stalled by two signals. Let's call it flush, for pipeline flush. Problem: how do I detect branch instructions in fetch? I just look at the opcode, duh. 
+
+For jump instructions, they always trigger a branch_taken signal

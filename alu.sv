@@ -1,14 +1,20 @@
 `default_nettype none
 
+import constants::*
+
 module alu (
     input  logic    [31:0] oper1_i,
     input  logic    [31:0] oper2_i,
-    input  logic    [ 4:0] sel_op_i,
+    input  alu_op_e        sel_op_i,
     output logic    [31:0] result_o
 );
 
   always_comb begin
     case (sel_op_i)
+      ALU_PASS: begin
+        result_o = oper1_i;
+      end
+
       ALU_ADD: begin
         result_o = oper1_i + oper2_i;
       end
@@ -47,6 +53,14 @@ module alu (
 
       ALU_AND: begin
         result_o = oper1_i & oper2_i;
+      end
+
+      ALU_NE: begin
+        result_o = oper1_i != oper2_i;
+      end
+
+      ALU_EQ: begin
+        result_o = oper1_i == oper2_i;
       end
 
       default: begin

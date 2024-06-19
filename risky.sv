@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 //
 //  Module 'risky'
 //
@@ -158,6 +160,7 @@ module risky (
       .branch_i      (decode_branch),
       .rs1_i         (fu_mux_rs1),
       .rs2_i         (fu_mux_rs2),
+      .pc_i          (pc),
       .sel_rd_o      (execute_sel_rd),
       .mem_re_o      (execute_mem_re),
       .mem_we_o      (execute_mem_we),

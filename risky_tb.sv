@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 module risky_tb ();
   logic clk, rst_n;
 
@@ -26,7 +28,7 @@ module risky_tb ();
 
     @(posedge clk);
 
-    for (int i = 0; i < 50; i++) @(posedge clk);
+    for (int i = 0; i < 100; i++) @(posedge clk);
     $finish;
   end
 

@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 //
 //  Module 'decode'
 //
@@ -21,7 +23,8 @@ module decode (
     output logic        mem_we_o,     // Memory write enable
     output data_size_e  mem_size_o,   // Size and signedness of memory instr
     output logic [31:0] imm_o,        // Immediate value
-    output logic        branch_o      // True if instr in front is branch
+    output logic        branch_o,     // True if instr in front is branch
+    output logic        jump_o        // True if instr in front is jump
 );
 
   // The instruction decode stage should take in a 32-bit instruction and read
@@ -36,6 +39,7 @@ module decode (
   data_size_e  mem_size;
   logic [31:0] imm;
   logic        branch;
+  logic        jump;
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin       
@@ -48,6 +52,7 @@ module decode (
       mem_size   <= '0;
       imm_o      <= '0;
       branch_o   <= '0;
+      jump_o     <= '0;
     end
     else if (!stall_i) begin
       sel_rd_o   <= sel_rd;
@@ -59,6 +64,7 @@ module decode (
       mem_size_o <= mem_size;
       imm_o      <= imm;
       branch_o   <= branch;
+      jump_o     <= jump;
     end
   end
 
@@ -68,13 +74,47 @@ module decode (
 
   always_comb begin
     unique casez (instr_i)
+      // Jump operations
+
+      J_JAL: begin
+        sel_rs1_o = '0;
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11:7];
+        alu_op    = ALU_PASS;
+        alu_src1  = '0;
+        alu_src2  = '0;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{12{instr_i[31]}}, instr_i[19:12], instr_i[20], instr_i[30:21], 1'b0};
+        branch    = 1'b1;
+        jump      = 1'b1;
+        $display("JAL");
+      end
+
+      I_JALR: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_PASS;
+        alu_src1  = ALU_SRC_PC;
+        alu_src2  = '0;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b1;
+        $display("JALR");
+      end
+
       // Branch operations
 
       B_BEQ: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
         sel_rd    = '0;
-        alu_op    = ALU_XOR;
+        alu_op    = ALU_EQ;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
@@ -82,13 +122,15 @@ module decode (
         mem_size  = UNDEF;
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
+        jump      = 1'b0;
+        $display("BEQ");
       end
       
       B_BNE: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
         sel_rd    = '0;
-        alu_op    = ALU_XOR;
+        alu_op    = ALU_NE;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
         mem_re    = 1'b0;
@@ -96,12 +138,13 @@ module decode (
         mem_size  = UNDEF;
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
+        jump      = 1'b0;
+        $display("BNE");
       end
 
       // Load operations
 
       I_LB: begin
-        $display("LB decode");
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
         sel_rd    = instr_i[11: 7];
@@ -113,10 +156,11 @@ module decode (
         mem_size  = BYTE_S;
         imm       = instr_i[31:20];
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("LB");
       end
 
       I_LBU: begin
-        $display("LBU decode");
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
         sel_rd    = instr_i[11: 7];
@@ -128,10 +172,11 @@ module decode (
         mem_size  = BYTE_U;
         imm       = instr_i[31:20];
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("LBU");
       end
 
       I_LH: begin
-        $display("LH decode");
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
         sel_rd    = instr_i[11: 7];
@@ -143,10 +188,11 @@ module decode (
         mem_size  = HALF_S;
         imm       = instr_i[31:20];
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("LH");
       end
 
       I_LHU: begin
-        $display("LHU decode");
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
         sel_rd    = instr_i[11: 7];
@@ -158,6 +204,8 @@ module decode (
         mem_size  = HALF_U;
         imm       = instr_i[31:20];
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("LHU");
       end
 
       I_LW: begin
@@ -172,6 +220,8 @@ module decode (
         mem_size  = WORD;
         imm       = instr_i[31:20];
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("LW");
       end
 
       // Store operations
@@ -188,6 +238,8 @@ module decode (
         mem_size  = BYTE_U;
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SB");
       end
 
       S_SH: begin
@@ -202,6 +254,8 @@ module decode (
         mem_size  = HALF_U;
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SH");
       end
 
       S_SW: begin
@@ -216,6 +270,8 @@ module decode (
         mem_size  = WORD;
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SW");
       end
 
       // Arithmetic operations
@@ -232,6 +288,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("ADD");
       end
 
       R_SUB: begin
@@ -246,6 +304,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SUB");
       end
 
       R_SLL: begin
@@ -260,6 +320,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SLL");
       end
 
       R_SLT: begin
@@ -274,6 +336,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SLT");
       end
       
       R_SLTU: begin
@@ -288,6 +352,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SLTU");
       end
 
       R_XOR: begin
@@ -302,6 +368,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("XOR");
       end
 
       R_SRL: begin
@@ -316,6 +384,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SRL");
       end
 
       R_SRA: begin
@@ -330,6 +400,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SRA");
       end
 
       R_OR: begin
@@ -344,6 +416,8 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("OR");
       end
 
       R_AND: begin
@@ -358,8 +432,154 @@ module decode (
         mem_size  = UNDEF;
         imm       = '0;
         branch    = 1'b0;
+        jump      = 1'b0;
+        $display("AND");
       end
-
+      
+      I_ADDI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_ADD;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("ADDI");
+      end
+      
+      I_SLTI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_SLT;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SLTI");
+      end
+      
+      I_SLTIU: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_SLTU;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SLTIU");
+      end
+      
+      I_XORI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_XOR;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("XORI");
+      end
+      
+      I_ORI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_OR;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("ORI");
+      end
+      
+      I_ANDI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_AND;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[31:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("ANDI");
+      end
+      
+      I_SLLI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_SLL;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[24:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SLLI");
+      end
+      
+      I_SRLI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_SRL;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[24:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SRLI");
+      end
+      
+      I_SRAI: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11: 7];
+        alu_op    = ALU_SRA;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_IMM;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = instr_i[24:20];
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("SRAI");
+      end
+      
       default: begin
         sel_rs1_o = '0;
         sel_rs2_o = '0;
@@ -372,6 +592,8 @@ module decode (
         mem_size  = '0;
         imm       = '0;
         branch    = '0;
+        jump      = '0;
+        $display("UNDEFINED");
       end
     endcase
   end

@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 module fetch (
     input  logic clk,
     input  logic rst_n,
@@ -44,9 +46,11 @@ module fetch (
   always_comb begin
     case (state)
       NORMAL: begin
-        if (instr_i[6:0] == 7'b110_0011) begin
+        if (instr_i[6:0] == 7'b110_0011 || 
+            instr_i[6:0] == 7'b110_1111) begin
           next_state = FLUSH;
-        end else begin
+        end 
+        else begin
           next_state = NORMAL;
         end
 

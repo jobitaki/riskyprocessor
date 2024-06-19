@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 module instr_memory (
     input logic                  clk,
     input logic [ADDR_WIDTH-1:0] addr_i,

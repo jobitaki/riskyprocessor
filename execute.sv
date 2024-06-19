@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 module execute (
     input  logic clk,
     input  logic rst_n,
@@ -12,8 +14,10 @@ module execute (
     input  data_size_e  mem_size_i,
     input  logic [31:0] imm_i,
     input  logic        branch_i,
+    input  logic        jump_i,
     input  logic [31:0] rs1_i,
     input  logic [31:0] rs2_i,
+    input  logic [31:0] pc_i,
     output logic [ 4:0] sel_rd_o,
     output logic        mem_re_o,
     output logic        mem_we_o,
@@ -29,7 +33,7 @@ module execute (
   logic [31:0] was_store_address; // The address of the previous store
   logic [31:0] alu_result;        // Result of ALU 
 
-  assign branch_taken_o = branch_i & alu_result[0];
+  assign branch_taken_o = (branch_i & alu_result[0]) | jump_i;
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
@@ -97,6 +101,7 @@ module execute (
       ALU_SRC_IMM: alu_oper1 = imm_i;
       ALU_SRC_RS1: alu_oper1 = rs1_i;
       ALU_SRC_RS2: alu_oper1 = rs2_i;
+      ALU_SRC_PC:  alu_oper1 = pc_i;
       default:     alu_oper1 = '0;
     endcase
   end
@@ -106,6 +111,7 @@ module execute (
       ALU_SRC_IMM: alu_oper2 = imm_i;
       ALU_SRC_RS1: alu_oper2 = rs1_i;
       ALU_SRC_RS2: alu_oper2 = rs2_i;
+      ALU_SRC_PC:  alu_oper1 = pc_i;
       default:     alu_oper2 = '0;
     endcase
   end

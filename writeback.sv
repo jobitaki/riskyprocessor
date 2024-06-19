@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 module writeback (
     input  logic        clk,
     input  logic        rst_n,

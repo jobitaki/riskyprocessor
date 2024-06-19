@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 module program_counter (
   input logic clk,
   input logic rst_n,

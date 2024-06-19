@@ -1,5 +1,7 @@
 `default_nettype none
 
+import constants::*
+
 //
 //  Module 'mem_access'
 //
