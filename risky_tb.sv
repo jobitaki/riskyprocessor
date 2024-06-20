@@ -60,6 +60,7 @@ module risky_tb ();
       end
       $display();
     end
+    $display();
   endtask
 
   initial begin
@@ -71,8 +72,8 @@ module risky_tb ();
 
     @(posedge clk);
 
-    for (int i = 0; i < 120; i++) begin
-      // print_registers();
+    for (int i = 0; i < 100; i++) begin
+      print_registers();
       @(posedge clk);
     end
 

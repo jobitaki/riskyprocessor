@@ -19,7 +19,14 @@ module writeback (
   // The writeback stage should write what is in data or alu_result into the rd
   // register.
   
-  assign data_bypass_o = data_i;
+  always_comb begin
+    if (mem_re_i) begin
+      data_bypass_o = data_i;
+    end
+    else begin
+      data_bypass_o = alu_result_i;  
+    end
+  end
 
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
