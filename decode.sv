@@ -73,7 +73,40 @@ module decode (
 
   always_comb begin
     unique casez (instr_i)
-      // Jump operations
+      // Oui instructions
+      U_LUI: begin
+        sel_rs1_o = '0;
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11:7];
+        alu_op    = ALU_PASS;
+        alu_src1  = ALU_SRC_IMM;
+        alu_src2  = '0;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {instr_i[31:12], 12'd0};
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("LUI");
+      end
+      
+      U_AUIPC: begin
+        sel_rs1_o = '0;
+        sel_rs2_o = '0;
+        sel_rd    = instr_i[11:7];
+        alu_op    = ALU_ADD;
+        alu_src1  = ALU_SRC_IMM;
+        alu_src2  = ALU_SRC_PC;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {instr_i[31:12], 12'd0};
+        branch    = 1'b0;
+        jump      = 1'b0;
+        $display("AUIPC");
+      end
+
+      // Jump instructions
 
       J_JAL: begin
         sel_rs1_o = '0;
@@ -107,7 +140,7 @@ module decode (
         $display("JALR");
       end
 
-      // Branch operations
+      // Branch instructions
 
       B_BEQ: begin
         sel_rs1_o = instr_i[19:15];
@@ -141,7 +174,71 @@ module decode (
         $display("BNE");
       end
 
-      // Load operations
+      B_BLT: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+        sel_rd    = '0;
+        alu_op    = ALU_SLT;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_RS2;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
+        branch    = 1'b1;
+        jump      = 1'b0;
+        $display("BNE");
+      end
+
+      B_BLTU: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+        sel_rd    = '0;
+        alu_op    = ALU_SLTU;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_RS2;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
+        branch    = 1'b1;
+        jump      = 1'b0;
+        $display("BNE");
+      end
+
+      B_BGE: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+        sel_rd    = '0;
+        alu_op    = ALU_SGE;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_RS2;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
+        branch    = 1'b1;
+        jump      = 1'b0;
+        $display("BNE");
+      end
+
+      B_BGEU: begin
+        sel_rs1_o = instr_i[19:15];
+        sel_rs2_o = instr_i[24:20];
+        sel_rd    = '0;
+        alu_op    = ALU_SGEU;
+        alu_src1  = ALU_SRC_RS1;
+        alu_src2  = ALU_SRC_RS2;
+        mem_re    = 1'b0;
+        mem_we    = 1'b0;
+        mem_size  = UNDEF;
+        imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
+        branch    = 1'b1;
+        jump      = 1'b0;
+        $display("BNE");
+      end
+
+      // Load instructions
 
       I_LB: begin
         sel_rs1_o = instr_i[19:15];
@@ -223,7 +320,7 @@ module decode (
         $display("LW");
       end
 
-      // Store operations
+      // Store instructions
 
       S_SB: begin
         sel_rs1_o = instr_i[19:15];
@@ -273,7 +370,7 @@ module decode (
         $display("SW");
       end
 
-      // Arithmetic operations
+      // Arithmetic instructions
 
       R_ADD: begin
         sel_rs1_o = instr_i[19:15];
@@ -592,7 +689,7 @@ module decode (
         imm       = '0;
         branch    = '0;
         jump      = '0;
-        $display("UNDEFINED");
+        $display("BUBBLE");
       end
     endcase
   end

@@ -34,7 +34,7 @@ module fetch (
 
   assign re_o = ~stall_i;
 
-  // TODO Implement a branch detection circuit to insert bubbles where necessary
+  // Branch detection circuit to insert bubbles where necessary
   // When branch is seen, go into flush state until branch is resolved in execute stage.
 
   typedef enum logic {NORMAL, FLUSH} state_e;

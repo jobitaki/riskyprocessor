@@ -35,6 +35,14 @@ module alu (
         result_o = oper1_i < oper2_i;
       end
 
+      ALU_SGE: begin
+        result_o = oper1_i >= oper2_i;
+      end
+      
+      ALU_SGEU: begin
+        result_o = $signed(oper1_i) >= $signed(oper2_i);
+      end
+
       ALU_XOR: begin
         result_o = oper1_i ^ oper2_i; 
       end
