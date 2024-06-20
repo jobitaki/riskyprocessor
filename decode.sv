@@ -87,7 +87,7 @@ module decode (
         imm       = {instr_i[31:12], 12'd0};
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("LUI");
+        $display("LUI x%0d, 0x%h", sel_rd, imm);
       end
       
       U_AUIPC: begin
@@ -103,7 +103,7 @@ module decode (
         imm       = {instr_i[31:12], 12'd0};
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("AUIPC");
+        $display("AUIPC x%0d, 0x%h", sel_rd, imm);
       end
 
       // Jump instructions
@@ -121,7 +121,7 @@ module decode (
         imm       = {{12{instr_i[31]}}, instr_i[19:12], instr_i[20], instr_i[30:21], 1'b0};
         branch    = 1'b1;
         jump      = 1'b1;
-        $display("JAL");
+        $display("JAL x%0d, %0d", sel_rd, $signed(imm));
       end
 
       I_JALR: begin
@@ -137,7 +137,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b1;
-        $display("JALR");
+        $display("JALR x%0d, %0d", sel_rd, $signed(imm));
       end
 
       // Branch instructions
@@ -155,7 +155,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
         jump      = 1'b0;
-        $display("BEQ");
+        $display("BEQ x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
       
       B_BNE: begin
@@ -171,7 +171,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
         jump      = 1'b0;
-        $display("BNE");
+        $display("BNE x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
 
       B_BLT: begin
@@ -187,7 +187,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
         jump      = 1'b0;
-        $display("BNE");
+        $display("BLT x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
 
       B_BLTU: begin
@@ -203,7 +203,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
         jump      = 1'b0;
-        $display("BNE");
+        $display("BLTU x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
 
       B_BGE: begin
@@ -219,7 +219,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
         jump      = 1'b0;
-        $display("BNE");
+        $display("BGE x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
 
       B_BGEU: begin
@@ -235,7 +235,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8], 1'b0};
         branch    = 1'b1;
         jump      = 1'b0;
-        $display("BNE");
+        $display("BGEU x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
 
       // Load instructions
@@ -253,7 +253,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("LB");
+        $display("LB x%0d, %0d(x%0d)", sel_rd, $signed(imm), sel_rs1_o);
       end
 
       I_LBU: begin
@@ -269,7 +269,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("LBU");
+        $display("LBU x%0d, %0d(x%0d)", sel_rd, $signed(imm), sel_rs1_o);
       end
 
       I_LH: begin
@@ -285,7 +285,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("LH");
+        $display("LH x%0d, %0d(x%0d)", sel_rd, $signed(imm), sel_rs1_o);
       end
 
       I_LHU: begin
@@ -301,7 +301,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("LHU");
+        $display("LHU x%0d, %0d(x%0d)", sel_rd, $signed(imm), sel_rs1_o);
       end
 
       I_LW: begin
@@ -317,7 +317,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("LW");
+        $display("LW x%0d, %0d(x%0d)", sel_rd, $signed(imm), sel_rs1_o);
       end
 
       // Store instructions
@@ -335,7 +335,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SB");
+        $display("SB x%0d, %0d(x%0d)", sel_rs2_o, $signed(imm), sel_rs1_o);
       end
 
       S_SH: begin
@@ -351,7 +351,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SH");
+        $display("SH x%0d, %0d(x%0d)", sel_rs2_o, $signed(imm), sel_rs1_o);
       end
 
       S_SW: begin
@@ -367,7 +367,7 @@ module decode (
         imm       = {{20{instr_i[31]}}, instr_i[31:25], instr_i[11:7]};
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SW");
+        $display("SW x%0d, %0d(x%0d)", sel_rs2_o, $signed(imm), sel_rs1_o);
       end
 
       // Arithmetic instructions
@@ -385,7 +385,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("ADD");
+        $display("ADD x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_SUB: begin
@@ -401,7 +401,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SUB");
+        $display("SUB x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_SLL: begin
@@ -417,7 +417,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SLL");
+        $display("SLL x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_SLT: begin
@@ -433,7 +433,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SLT");
+        $display("SLT x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
       
       R_SLTU: begin
@@ -449,7 +449,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SLTU");
+        $display("SLTU x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_XOR: begin
@@ -465,7 +465,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("XOR");
+        $display("XOR x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_SRL: begin
@@ -481,7 +481,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SRL");
+        $display("SRL x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_SRA: begin
@@ -497,7 +497,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SRA");
+        $display("SRA x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_OR: begin
@@ -513,7 +513,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("OR");
+        $display("OR x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
 
       R_AND: begin
@@ -529,7 +529,7 @@ module decode (
         imm       = '0;
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("AND");
+        $display("AND x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
       
       I_ADDI: begin
@@ -545,7 +545,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("ADDI");
+        $display("ADDI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_SLTI: begin
@@ -561,7 +561,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SLTI");
+        $display("SLTI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_SLTIU: begin
@@ -577,7 +577,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SLTIU");
+        $display("SLTIU x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_XORI: begin
@@ -593,7 +593,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("XORI");
+        $display("XORI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_ORI: begin
@@ -609,7 +609,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("ORI");
+        $display("ORI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_ANDI: begin
@@ -625,7 +625,7 @@ module decode (
         imm       = instr_i[31:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("ANDI");
+        $display("ANDI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_SLLI: begin
@@ -641,7 +641,7 @@ module decode (
         imm       = instr_i[24:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SLLI");
+        $display("SLLI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_SRLI: begin
@@ -657,7 +657,7 @@ module decode (
         imm       = instr_i[24:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SRLI");
+        $display("SRLI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       I_SRAI: begin
@@ -673,7 +673,7 @@ module decode (
         imm       = instr_i[24:20];
         branch    = 1'b0;
         jump      = 1'b0;
-        $display("SRAI");
+        $display("SRAI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
       
       default: begin

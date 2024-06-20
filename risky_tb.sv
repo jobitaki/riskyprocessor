@@ -72,8 +72,7 @@ module risky_tb ();
     @(posedge clk);
 
     for (int i = 0; i < 120; i++) begin
-      $display("Cycle %0d", i + 2);
-      print_registers();
+      // print_registers();
       @(posedge clk);
     end
 
