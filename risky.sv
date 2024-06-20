@@ -1,6 +1,6 @@
 `default_nettype none
 
-import constants::*
+import constants::*;
 
 //
 //  Module 'risky'
@@ -13,6 +13,7 @@ module risky (
 );
 
   logic        fetch_re;
+  logic        fetch_incr_pc;
   logic        execute_stall;
   logic [31:0] instr_q1;
   tri   [31:0] instr_memory_bus;
@@ -26,6 +27,7 @@ module risky (
       .stall_i         (execute_stall),
       .branch_resolve_i(decode_branch),
       .re_o            (fetch_re),
+      .incr_pc_o       (fetch_incr_pc),
       .instr_o         (instr_q1)
   );
 
@@ -47,7 +49,7 @@ module risky (
       .clk,
       .rst_n,
       .pc_i,
-      .en_i(pc_en),
+      .en_i(fetch_incr_pc),
       .pc_o(pc)
   );
 
@@ -65,6 +67,7 @@ module risky (
   logic        decode_mem_re, decode_mem_we;
   data_size_e  decode_mem_size;
   logic [31:0] decode_imm;
+  logic        decode_jump;
 
   decode u_decode (
       .clk,
@@ -81,7 +84,8 @@ module risky (
       .mem_we_o  (decode_mem_we),
       .mem_size_o(decode_mem_size),
       .imm_o     (decode_imm),
-      .branch_o  (decode_branch)
+      .branch_o  (decode_branch),
+      .jump_o    (decode_jump)
   );
 
   logic [31:0] regfile_rs1, regfile_rs2;
@@ -158,6 +162,7 @@ module risky (
       .mem_size_i    (decode_mem_size),
       .imm_i         (decode_imm),
       .branch_i      (decode_branch),
+      .jump_i        (decode_jump),
       .rs1_i         (fu_mux_rs1),
       .rs2_i         (fu_mux_rs2),
       .pc_i          (pc),

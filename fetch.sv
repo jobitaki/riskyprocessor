@@ -1,6 +1,6 @@
 `default_nettype none
 
-import constants::*
+import constants::*;
 
 module fetch (
     input  logic clk,
@@ -9,6 +9,7 @@ module fetch (
     input  logic stall_i,
     input  logic branch_resolve_i,
     output logic re_o,
+    output logic incr_pc_o,
     output logic [31:0] instr_o
 );
 
@@ -31,10 +32,7 @@ module fetch (
     end
   end
 
-  always_comb begin
-    if (!stall_i && !flush) re_o = 1'b1;
-    else                    re_o = 1'b0;
-  end
+  assign re_o = ~stall_i;
 
   // TODO Implement a branch detection circuit to insert bubbles where necessary
   // When branch is seen, go into flush state until branch is resolved in execute stage.
@@ -49,17 +47,25 @@ module fetch (
         if (instr_i[6:0] == 7'b110_0011 || 
             instr_i[6:0] == 7'b110_1111) begin
           next_state = FLUSH;
+          incr_pc_o  = 1'b0;
         end 
         else begin
           next_state = NORMAL;
+          incr_pc_o  = 1'b1;
         end
 
-        flush = 1'b0;
+        flush      = 1'b0;
       end
 
       FLUSH: begin
-        if (branch_resolve_i) next_state = NORMAL;
-        else next_state = FLUSH;
+        if (branch_resolve_i) begin
+          next_state = NORMAL;
+          incr_pc_o  = 1'b1;
+        end
+        else begin
+          next_state = FLUSH;
+          incr_pc_o  = 1'b0;
+        end
 
         flush = 1'b1;
       end
@@ -67,6 +73,7 @@ module fetch (
       default: begin
         next_state = NORMAL;
         flush = 1'b0;
+        incr_pc_o  = 1'b0;
       end
     endcase
   end

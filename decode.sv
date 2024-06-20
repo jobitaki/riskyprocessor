@@ -1,8 +1,7 @@
 `default_nettype none
 
-import constants::*
+import constants::*;
 
-//
 //  Module 'decode'
 //
 //  The ID (instruction decode) stage of the pipeline. Instructions are decoded

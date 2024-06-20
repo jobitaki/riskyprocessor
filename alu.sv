@@ -1,6 +1,6 @@
 `default_nettype none
 
-import constants::*
+import constants::*;
 
 module alu (
     input  logic    [31:0] oper1_i,

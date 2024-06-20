@@ -1,6 +1,6 @@
 `default_nettype none
 
-import constants::*
+import constants::*;
 
 module instr_memory (
     input logic                  clk,

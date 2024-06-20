@@ -1,6 +1,6 @@
 package constants;
-  int ADDR_WIDTH = 9;
-  int SIM_MEM_SIZE = 16'hFFFF;
+  parameter int ADDR_WIDTH = 9;
+  parameter int SIM_MEM_SIZE = 16'hFFFF;
 
   typedef enum logic [31:0] {
     // I-type instructions
