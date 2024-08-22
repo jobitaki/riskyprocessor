@@ -8,22 +8,22 @@ import constants::*;
 //  and registers are read from the regfile.
 //
 module decode (
-    input  logic        clk,
-    input  logic        rst_n,       
-    input  logic [31:0] instr_i,      // Instruction in
-    input  logic        stall_i,      // Stall pipeline up to execute
-    output logic [ 4:0] sel_rs1_o,    // Register 1 id 
-    output logic [ 4:0] sel_rs2_o,    // Register 2 id
-    output logic [ 4:0] sel_rd_o,     // Destination register id
-    output alu_op_e     alu_op_o,     // ALU opcode
-    output alu_src_e    alu_src1_o,   // ALU mux sel
-    output alu_src_e    alu_src2_o,   // ALU mux sel
-    output logic        mem_re_o,     // Memory read enable
-    output logic        mem_we_o,     // Memory write enable
-    output data_size_e  mem_size_o,   // Size and signedness of memory instr
-    output logic [31:0] imm_o,        // Immediate value
-    output logic        branch_o,     // True if instr in front is branch
-    output logic        jump_o        // True if instr in front is jump
+    input  logic              clk,
+    input  logic              rst_n,
+    input  logic       [31:0] instr_i,     // Instruction in
+    input  logic              stall_i,     // Stall pipeline up to execute
+    output logic       [ 4:0] sel_rs1_o,   // Register 1 id
+    output logic       [ 4:0] sel_rs2_o,   // Register 2 id
+    output logic       [ 4:0] sel_rd_o,    // Destination register id
+    output alu_op_e           alu_op_o,    // ALU opcode
+    output alu_src_e          alu_src1_o,  // ALU mux sel
+    output alu_src_e          alu_src2_o,  // ALU mux sel
+    output logic              mem_re_o,    // Memory read enable
+    output logic              mem_we_o,    // Memory write enable
+    output data_size_e        mem_size_o,  // Size and signedness of memory instr
+    output logic       [31:0] imm_o,       // Immediate value
+    output logic              branch_o,    // True if instr in front is branch
+    output logic              jump_o       // True if instr in front is jump
 );
 
   // The instruction decode stage should take in a 32-bit instruction and read
@@ -31,17 +31,17 @@ module decode (
 
   // It should also generate the necessary control signals
   // ALU_OP, mem_re, mem_we, DEST_REG, ALU_SRC1, ALU_SRC2, IMM
-  logic [ 4:0] sel_rd;
-  alu_op_e     alu_op;
-  alu_src_e    alu_src1, alu_src2;
-  logic        mem_re, mem_we;
-  data_size_e  mem_size;
-  logic [31:0] imm;
-  logic        branch;
-  logic        jump;
+  logic    [4:0] sel_rd;
+  alu_op_e       alu_op;
+  alu_src_e alu_src1, alu_src2;
+  logic mem_re, mem_we;
+  data_size_e        mem_size;
+  logic       [31:0] imm;
+  logic              branch;
+  logic              jump;
 
   always_ff @(posedge clk, negedge rst_n) begin
-    if (!rst_n) begin       
+    if (!rst_n) begin
       sel_rd_o   <= '0;
       alu_op_o   <= '0;
       alu_src1_o <= '0;
@@ -52,8 +52,7 @@ module decode (
       imm_o      <= '0;
       branch_o   <= '0;
       jump_o     <= '0;
-    end
-    else if (!stall_i) begin
+    end else if (!stall_i) begin
       sel_rd_o   <= sel_rd;
       alu_op_o   <= alu_op;
       alu_src1_o <= alu_src1;
@@ -89,7 +88,7 @@ module decode (
         jump      = 1'b0;
         $display("LUI x%0d, 0x%h", sel_rd, imm);
       end
-      
+
       U_AUIPC: begin
         sel_rs1_o = '0;
         sel_rs2_o = '0;
@@ -127,7 +126,7 @@ module decode (
       I_JALR: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_PASS;
         alu_src1  = ALU_SRC_PC;
         alu_src2  = '0;
@@ -157,7 +156,7 @@ module decode (
         jump      = 1'b0;
         $display("BEQ x%0d, x%0d, %0d", sel_rs1_o, sel_rs2_o, $signed(imm));
       end
-      
+
       B_BNE: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
@@ -243,7 +242,7 @@ module decode (
       I_LB: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -259,7 +258,7 @@ module decode (
       I_LBU: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -275,7 +274,7 @@ module decode (
       I_LH: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -291,7 +290,7 @@ module decode (
       I_LHU: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -307,7 +306,7 @@ module decode (
       I_LW: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -375,7 +374,7 @@ module decode (
       R_ADD: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -391,7 +390,7 @@ module decode (
       R_SUB: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SUB;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -407,7 +406,7 @@ module decode (
       R_SLL: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SLL;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -423,7 +422,7 @@ module decode (
       R_SLT: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SLT;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -435,11 +434,11 @@ module decode (
         jump      = 1'b0;
         $display("SLT x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
-      
+
       R_SLTU: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SLTU;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -455,7 +454,7 @@ module decode (
       R_XOR: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_XOR;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -471,7 +470,7 @@ module decode (
       R_SRL: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SRL;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -487,7 +486,7 @@ module decode (
       R_SRA: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SRA;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -503,7 +502,7 @@ module decode (
       R_OR: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_OR;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -519,7 +518,7 @@ module decode (
       R_AND: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = instr_i[24:20];
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_AND;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_RS2;
@@ -531,11 +530,11 @@ module decode (
         jump      = 1'b0;
         $display("AND x%0d, x%0d, x%0d", sel_rd, sel_rs1_o, sel_rs2_o);
       end
-      
+
       I_ADDI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_ADD;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -547,11 +546,11 @@ module decode (
         jump      = 1'b0;
         $display("ADDI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_SLTI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SLT;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -563,11 +562,11 @@ module decode (
         jump      = 1'b0;
         $display("SLTI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_SLTIU: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SLTU;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -579,11 +578,11 @@ module decode (
         jump      = 1'b0;
         $display("SLTIU x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_XORI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_XOR;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -595,11 +594,11 @@ module decode (
         jump      = 1'b0;
         $display("XORI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_ORI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_OR;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -611,11 +610,11 @@ module decode (
         jump      = 1'b0;
         $display("ORI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_ANDI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_AND;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -627,11 +626,11 @@ module decode (
         jump      = 1'b0;
         $display("ANDI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_SLLI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SLL;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -643,11 +642,11 @@ module decode (
         jump      = 1'b0;
         $display("SLLI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_SRLI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SRL;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -659,11 +658,11 @@ module decode (
         jump      = 1'b0;
         $display("SRLI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       I_SRAI: begin
         sel_rs1_o = instr_i[19:15];
         sel_rs2_o = '0;
-        sel_rd    = instr_i[11: 7];
+        sel_rd    = instr_i[11:7];
         alu_op    = ALU_SRA;
         alu_src1  = ALU_SRC_RS1;
         alu_src2  = ALU_SRC_IMM;
@@ -675,7 +674,7 @@ module decode (
         jump      = 1'b0;
         $display("SRAI x%0d, x%0d, %0d", sel_rd, sel_rs1_o, imm);
       end
-      
+
       default: begin
         sel_rs1_o = '0;
         sel_rs2_o = '0;

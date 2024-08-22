@@ -2,20 +2,26 @@
 
 import constants::*;
 
+//
+//  Module 'fetch'
+//
+//  The instruction fetch (IF) stage should read an instruction from memory.
+//  It should pass the instruction to the decode stage.
+//  It should increment the PC counter by 4
+//
 module fetch (
     input  logic clk,
     input  logic rst_n,
-    input  logic [31:0] instr_i,
-    input  logic stall_i,
-    input  logic branch_resolve_i,
-    output logic re_o,
-    output logic incr_pc_o,
-    output logic [31:0] instr_o
+    input  logic [31:0] instr_i,   // Instruction read from instruction memory
+    input  logic stall_i,          // Stall the pipeline, wait for store to
+                                   // occur before a load of the same address
+    input  logic branch_resolve_i, // Signals if a branch is decided
+
+    output logic re_o,             // Read enable for instruction memory
+    output logic incr_pc_o,        // Signals to increment PC
+    output logic [31:0] instr_o    // Instruction for decode stage
 );
 
-  // The instruction fetch (IF) stage should read an instruction from memory.
-  // It should pass the instruction to the decode stage.
-  // It should increment the PC counter by 4
 
   logic flush;
 

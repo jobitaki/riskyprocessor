@@ -13,10 +13,13 @@ module data_memory (
     input logic [ADDR_WIDTH-1:0] addr_i,
     inout tri   [          31:0] bus_io,
     input logic                  re_i,
-    input logic                  we_i
+    input logic                  we_i,
+    output logic [127:0] mem_o // FOR TESTING 
 );
 
   logic [31:0] mem[SIM_MEM_SIZE];
+
+  assign mem_o = {mem[4], mem[0]};
 
   assign bus_io = (re_i) ? mem[addr_i] : 'z;
 

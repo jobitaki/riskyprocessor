@@ -1,5 +1,5 @@
-all: constants.sv fetch.sv decode.sv program_counter.sv alu.sv instr_memory.sv regfile.sv execute.sv mem_access.sv data_memory.sv writeback.sv forward_unit.sv risky.sv risky_tb.sv
-	sv2v -w risky.v constants.sv fetch.sv decode.sv program_counter.sv alu.sv instr_memory.sv regfile.sv execute.sv mem_access.sv data_memory.sv writeback.sv forward_unit.sv risky.sv risky_tb.sv
+all: rtl/constants.sv rtl/fetch.sv rtl/decode.sv rtl/program_counter.sv rtl/alu.sv rtl/instr_memory.sv rtl/regfile.sv rtl/execute.sv rtl/mem_access.sv rtl/data_memory.sv rtl/writeback.sv rtl/forward_unit.sv rtl/risky.sv tb/risky_tb.sv
+	sv2v -w risky.v rtl/constants.sv rtl/fetch.sv rtl/decode.sv rtl/program_counter.sv rtl/alu.sv rtl/instr_memory.sv rtl/regfile.sv rtl/execute.sv rtl/mem_access.sv rtl/data_memory.sv rtl/writeback.sv rtl/forward_unit.sv rtl/risky.sv tb/risky_tb.sv
 	iverilog risky.v
 	vvp a.out
 

@@ -1,8 +1,8 @@
 strncopy:
-    # a0 = char *dst
-    # a1 = const char *src
-    # a2 = unsigned long n
-    # t0 = i
+    # a0 = char *dst (where to store new string)
+    # a1 = const char *src (start of string)
+    # a2 = unsigned long n (length of string)
+    # t0 = i (index)
 	  li      a1, 4
     li      a2, 4
     li      t0, 0        # i = 0
