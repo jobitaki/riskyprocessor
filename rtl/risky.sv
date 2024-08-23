@@ -137,7 +137,7 @@ module risky (
       FU_SRC_WB:  fu_mux_rs1 = writeback_data_bypass;
       default:    fu_mux_rs1 = '0;
     endcase
-    
+
     case (fu_sel_rs2_src)
       FU_SRC_REG: fu_mux_rs2 = regfile_rs2;
       FU_SRC_MEM: fu_mux_rs2 = memacc_data_bypass;

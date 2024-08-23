@@ -1,0 +1,2475 @@
+(
+    show_hierarchy: None,
+    show_menu: None,
+    show_ticks: None,
+    show_toolbar: None,
+    show_tooltip: None,
+    show_overview: None,
+    show_statusbar: None,
+    align_names_right: None,
+    show_variable_indices: None,
+    waves: Some((
+        source: File("/Users/jaehyunlim/Documents/FPGAStuff/riskyprocessor/riskyprocessor/dump.vcd"),
+        format: Vcd,
+        active_scope: Some((
+            strs: [
+                "risky_tb",
+                "dut",
+                "u_mem_access",
+                "u_data_memory",
+            ],
+        )),
+        displayed_items_order: [
+            1,
+            2,
+            140,
+            13,
+            3,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137,
+            138,
+            139,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            50,
+            51,
+            107,
+        ],
+        displayed_items: {
+            30: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "alu_src2_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_src2_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            78: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "was_store_address",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "was_store_address",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            64: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "mem_re_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.mem_re_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            66: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "mem_size_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.mem_size_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            52: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_op_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_op_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            34: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "imm_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "imm_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            11: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "sel_rs2_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_regfile.sel_rs2_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            131: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x23",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x23",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            128: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x20",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x20",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            107: Marker((
+                color: None,
+                background_color: None,
+                name: None,
+                idx: 0,
+            )),
+            110: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x2",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x2",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            49: Divider((
+                color: None,
+                background_color: Some("blue"),
+                name: Some("EXECUTE"),
+            )),
+            5: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "rs1_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "rs1_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            129: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x21",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x21",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            26: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "alu_op_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_op_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            60: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "branch_taken_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "branch_taken_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            79: Divider((
+                color: None,
+                background_color: Some("blue"),
+                name: Some("MEM ACCESS"),
+            )),
+            139: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x31",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x31",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            124: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x16",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x16",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            47: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "sel_rs2_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.sel_rs2_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            59: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "branch_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "branch_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            96: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "wr_data",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "wr_data",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            85: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "data_memory_bus",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "data_memory_bus",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            48: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "stall_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.stall_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            19: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "instr_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "instr_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            121: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x13",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x13",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            37: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "jump_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "jump_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            22: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "stall_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_fetch.stall_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            94: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "sel_rd_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.sel_rd_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            27: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "alu_src1",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_src1",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            45: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "sel_rd_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.sel_rd_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            16: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "flush",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "flush",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            95: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "stall_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.stall_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            72: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "rs2_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.rs2_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            46: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "sel_rs1_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.sel_rs1_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            43: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "mem_we_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.mem_we_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            42: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "mem_we",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "mem_we",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            92: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "rd_data",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "rd_data",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            99: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "data_bypass_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.data_bypass_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            126: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x18",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x18",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            51: Divider((
+                color: None,
+                background_color: None,
+                name: None,
+            )),
+            2: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                        ],
+                    ),
+                    name: "rst_n",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "rst_n",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            15: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "branch_resolve_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "branch_resolve_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            87: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "mem_re_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.mem_re_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            36: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "jump",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "jump",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            116: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x8",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x8",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            89: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "mem_size_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.mem_size_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            6: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "rs2_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_regfile.rs2_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            38: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "mem_re",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "mem_re",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            9: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "sel_rs1_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_regfile.sel_rs1_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            117: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x9",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x9",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            114: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x6",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x6",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            10: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "sel_rs2_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "sel_rs2_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            41: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "mem_size_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.mem_size_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            69: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "pc_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "pc_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            81: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "alu_result_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.alu_result_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            18: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "instr_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_fetch.instr_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            58: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_src2_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_src2_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            136: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x28",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x28",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            53: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_oper1",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_oper1",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            134: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x26",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x26",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            20: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "next_state",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "next_state",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            40: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "mem_size",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "mem_size",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            28: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "alu_src1_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_src1_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            44: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "sel_rd",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "sel_rd",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            83: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "data_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.data_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            71: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "rs2_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "rs2_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            23: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "state",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "state",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            54: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_oper2",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_oper2",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            68: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "mem_we_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.mem_we_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            122: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x14",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x14",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            97: Divider((
+                color: None,
+                background_color: Some("blue"),
+                name: Some("WRITEBACK"),
+            )),
+            56: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_result_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.alu_result_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            75: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "set_was_store",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "set_was_store",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            35: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "instr_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.instr_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            50: Divider((
+                color: None,
+                background_color: None,
+                name: None,
+            )),
+            86: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "data_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.data_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            106: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "we_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "we_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            103: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "mem_we_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.mem_we_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            84: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "data_memory_addr",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "data_memory_addr",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            88: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "mem_re_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.mem_re_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            108: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x0",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x0",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            63: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "mem_re_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.mem_re_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            80: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "alu_result_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.alu_result_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            102: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "mem_re_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.mem_re_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            13: Divider((
+                color: None,
+                background_color: Some("blue"),
+                name: Some("REGFILE"),
+            )),
+            1: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                        ],
+                    ),
+                    name: "clk",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "clk",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            118: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x10",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x10",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            70: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "rs1_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "rs1_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            32: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "branch_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "branch_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            109: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x1",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x1",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            21: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "re_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "re_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            65: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "mem_size_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.mem_size_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            90: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "mem_we_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.mem_we_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            120: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x12",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x12",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            8: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "sel_rs1_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "sel_rs1_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            98: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "alu_result_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.alu_result_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            24: Divider((
+                color: None,
+                background_color: Some("blue"),
+                name: Some("DECODE"),
+            )),
+            17: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "incr_pc_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "incr_pc_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            29: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "alu_src2",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_src2",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            112: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x4",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x4",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            73: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "sel_rd_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.sel_rd_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            135: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x27",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x27",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            3: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "rd_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "rd_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            76: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "stall_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "stall_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            113: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x5",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x5",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            130: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x22",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x22",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            82: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "data_bypass_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.data_bypass_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            123: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x15",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x15",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            57: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_src1_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_src1_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            101: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "data_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.data_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            39: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "mem_re_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_decode.mem_re_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            33: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "imm",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "imm",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            74: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "sel_rd_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.sel_rd_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            127: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x19",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x19",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            91: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "mem_we_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.mem_we_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            67: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "mem_we_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_execute.mem_we_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            14: Divider((
+                color: None,
+                background_color: Some("blue"),
+                name: Some("FETCH"),
+            )),
+            25: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "alu_op",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_op",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            132: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x24",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x24",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            140: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                            "u_data_memory",
+                        ],
+                    ),
+                    name: "mem_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "mem_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            12: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "we_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "we_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            100: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "data_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.data_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            7: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "sel_rd_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_regfile.sel_rd_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            115: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x7",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x7",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            93: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_mem_access",
+                        ],
+                    ),
+                    name: "sel_rd_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_mem_access.sel_rd_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            125: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x17",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x17",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            119: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x11",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x11",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            62: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "jump_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "jump_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            138: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x30",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x30",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            133: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x25",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x25",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            31: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_decode",
+                        ],
+                    ),
+                    name: "branch",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "branch",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            111: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x3",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x3",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            61: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "imm_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "imm_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            77: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "was_store",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "was_store",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            104: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "sel_rd_i",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.sel_rd_i",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            105: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_writeback",
+                        ],
+                    ),
+                    name: "sel_rd_o",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "…u_writeback.sel_rd_o",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            137: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_regfile",
+                        ],
+                    ),
+                    name: "x29",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "x29",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+            55: Variable((
+                variable_ref: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_execute",
+                        ],
+                    ),
+                    name: "alu_result",
+                ),
+                color: None,
+                background_color: None,
+                display_name: "alu_result",
+                display_name_type: Unique,
+                manual_name: None,
+            )),
+        },
+        display_item_ref_counter: 140,
+        viewports: [
+            (
+                curr_left: (0.06465217333042729),
+                curr_right: (0.266473688062796),
+            ),
+        ],
+        variable_format: {
+            (
+                root: (
+                    path: (
+                        strs: [
+                            "risky_tb",
+                            "dut",
+                            "u_fetch",
+                        ],
+                    ),
+                    name: "instr_o",
+                ),
+                field: [],
+            ): "RV32I",
+        },
+        cursor: Some((1, [
+            43,
+        ])),
+        right_cursor: None,
+        markers: {
+            0: (1, [
+                1,
+            ]),
+        },
+        focused_item: Some(2),
+        default_variable_name_type: Unique,
+        scroll_offset: 0.0,
+    )),
+    previous_waves: None,
+    count: None,
+    blacklisted_translators: [],
+    show_about: false,
+    show_keys: false,
+    show_gestures: false,
+    show_quick_start: false,
+    show_license: false,
+    show_wave_source: true,
+    show_performance: false,
+    show_logs: false,
+    show_cursor_window: false,
+    wanted_timeunit: Seconds,
+    time_string_format: None,
+    show_url_entry: false,
+    variable_name_filter_focused: false,
+    variable_name_filter_type: Fuzzy,
+    variable_name_filter_case_insensitive: true,
+    rename_target: None,
+    ui_zoom_factor: None,
+)

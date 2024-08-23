@@ -66,3 +66,16 @@ With a stall, execute should insert a NOP, and fetch and decode should halt. mem
 Now I want to work on branch instructions. Branching will also do stalling, but not like the other ones. Branch will need to stall fetch only. So fetch needs a system where it can be stalled by two signals. Let's call it flush, for pipeline flush. Problem: how do I detect branch instructions in fetch? I just look at the opcode, duh. 
 
 For jump instructions, they always trigger a branch_taken signal
+
+8.23.24 I've exposed all of the registers and memory to be visible in the waveform viewer. This really helps visualize where the problem is.
+
+I think the store operations are completely fucked. Which reminds me that I was working on it to change the whole system. 
+
+We have the memory system designed in such a way that it is word-aligned, e.g. accesses must happen in increments of word sizes.
+That's not a problem, the problem is that data_memory is designed in a way that has memory stored in word increments. So, in order to 
+store a byte, we have read, replace, and then write. So is a single cycle store impossible?  
+
+I think the solution is to pretend our data memory is byte addressed. But that creates a problem for reads. I guess since our data memory is
+technically a cache, that's a problem for the cache system. Time to overhaul the data memory system and do away with the data slicing crap.
+
+I did it! String copies, but still writing x's into memory...
